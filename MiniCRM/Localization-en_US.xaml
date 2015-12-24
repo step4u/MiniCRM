@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:local="clr-namespace:MiniCRM">
+    <!-- STRINGS START -->
+    <sys:String x:Key="MSG_REG_SUCCESS">Was registered.</sys:String>
+    <sys:String x:Key="MSG_REG_SUCCESS2">Try again to register.</sys:String>
+    <sys:String x:Key="MSG_CALL_IN">Ringing...</sys:String>
+    <!-- STRINGS END -->
+</ResourceDictionary>

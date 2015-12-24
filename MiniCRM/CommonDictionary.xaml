@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:local="clr-namespace:MiniCRM">
+    <!-- DB Connection String -->
+    <sys:String x:Key="FBSQL_CONSTR">User=USER1;Password=omega936;Database='{0}\MINICRM.FDB';DataSource=localhost;Port=3050;Dialect=3;Charset=KSC_5601;Role=;Connection lifetime=15; Pooling=true;Packet Size=8192;ServerType=0</sys:String>
+    <sys:String x:Key="FBSQL_CONSTR_DEV">User=USER1;Password=omega936;Database='C:\FBDB\MINICRM.FDB';DataSource=localhost;Port=3050;Dialect=3;Charset=KSC_5601;Role=;Connection lifetime=15; Pooling=true;Packet Size=8192;ServerType=0</sys:String>
+    <sys:String x:Key="RECORD_FOLDER">MediaFile</sys:String>
+</ResourceDictionary>

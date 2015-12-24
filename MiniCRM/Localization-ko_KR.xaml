@@ -1,0 +1,181 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:local="clr-namespace:MiniCRM">
+    <!-- STRINGS START -->
+    <sys:String x:Key="WIN_SETTINGS_GROUPBOX_TITLE">IP-PBX 설정</sys:String>
+    <sys:String x:Key="WIN_SETTINGS_TITLE">환경설정 - Coretree</sys:String>
+    <sys:String x:Key="WIN_SETTINGS_PBX_LABEL_IPADDRESS">아이피</sys:String>
+    <sys:String x:Key="WIN_SETTINGS_PBX_LABEL_PORT">포트</sys:String>
+    <sys:String x:Key="MSG_SETTINGS_PBX_IPADDRESS_EMPTY">PBX IP주소를 입력해 주세요.</sys:String>
+    <sys:String x:Key="MSG_SETTINGS_PBX_PORT_EMPTY">PBX IP주소를 입력해 주세요.</sys:String>
+
+    <sys:String x:Key="MSG_LOGON_EMPTYID">아이디를 입력해 주세요.</sys:String>
+    <sys:String x:Key="MSG_LOGON_EMPTYPWD">비밀번호를 입력해 주세요.</sys:String>
+    <sys:String x:Key="MSG_LOGON_FAIL">아이디 또는 비밀번호가 맞지 않습니다.</sys:String>
+    <sys:String x:Key="MSG_LOGON_SERVICE_NOTINSTALLED">DB 서비스가 설정되지 않았습니다. 관리자에게 문의하시기 바랍니다.</sys:String>
+
+    <!-- MAIN STRING -->
+    <sys:String x:Key="MSG_REG_SUCCESS">등록 되었습니다.</sys:String>
+    <sys:String x:Key="MSG_REG_RETRY">재등록을 시도합니다.</sys:String>
+    <sys:String x:Key="MSG_UNREG_SUCCESS">등록 해제 되었습니다.</sys:String>
+    <sys:String x:Key="MSG_MAIN_TITLE">MiniCRM</sys:String>
+    <sys:String x:Key="TOOTIP_MAIN_ANTENA_ON">등록됨</sys:String>
+    <sys:String x:Key="TOOTIP_MAIN_ANTENA_OFF">미등록</sys:String>
+    <sys:String x:Key="TOOTIP_MAIN_SMS_ON">SMS등록됨</sys:String>
+    <sys:String x:Key="TOOTIP_MAIN_SMS_OFF">SMS미등록</sys:String>
+    <sys:String x:Key="TOOTIP_MAIN_RECFOLDER">음성파일 폴더</sys:String>
+    <sys:String x:Key="MSG_CALL_IN">전화가 왔습니다.</sys:String>
+    <sys:String x:Key="MSG_CALL_IN2">"{0}" 님 전화가 왔습니다.</sys:String>
+    <sys:String x:Key="MSG_CALL_OUT">전화를 하는 중...</sys:String>
+    <sys:String x:Key="MSG_CALL_OUT2">"{0}" 님께 전화를 하는 중...</sys:String>
+    <sys:String x:Key="MSG_CALL_STATES_CONNECTED">통화중...</sys:String>
+    <sys:String x:Key="MSG_CALL_STATES_CONNECTED2">"{0}" 님과 통화중...</sys:String>
+    <sys:String x:Key="MSG_CALL_STATES_EMPTY_NUM">번호가 입력되지 않았습니다.</sys:String>
+    <sys:String x:Key="MSG_CALL_STATES_READY_TRANSFER">돌려줄 번호를 입력하세요.</sys:String>
+    <sys:String x:Key="MSG_SOCK_TIMEOUT" xml:space="preserve">서버로 부터 응답이 없습니다. 연결을 확인 후 다시 시도해 주십시오.&#x0d;&#x0a;같은 증상이 계속 반복 되면 관리자에게 연락 주십시오.</sys:String>
+    <sys:String x:Key="MSG_SOCK_ERROR" xml:space="preserve">서버와 연결되지 않았습니다. 연결을 확인 후 다시 시도해 주십시오.&#x0d;&#x0a;같은 증상이 계속 반복 되면 관리자에게 연락 주십시오.</sys:String>
+
+    <!-- MAIN SETTINGS -->
+    <sys:String x:Key="MAIN_SETTNGS_TITLE">환경설정</sys:String>
+    <sys:String x:Key="MAIN_SETTNGS_GROUP_PBX">PBX</sys:String>
+    <sys:String x:Key="MAIN_SETTNGS_GROUP_ETC">기타</sys:String>
+    <sys:String x:Key="MAIN_SETTNGS_LABEL_IPADDR">아이피</sys:String>
+    <sys:String x:Key="MAIN_SETTNGS_LABEL_PORT">포트</sys:String>
+    <sys:String x:Key="MAIN_SETTNGS_LABEL_CUSTPOPUP">착신시 고객정보 표시</sys:String>
+
+    <!-- PHONE BOOK -->
+    <sys:String x:Key="PB_TITLE">폰북</sys:String>
+    <sys:String x:Key="PB_TAB_TITLE_0">주소록</sys:String>
+    <sys:String x:Key="PB_TAB_TITLE_1">통화내역</sys:String>
+    <sys:String x:Key="PB_TAB_TITLE_2">SMS</sys:String>
+    <sys:String x:Key="PB_FLYOUT_TITLE_CUST_ADD">고객 추가</sys:String>
+    <sys:String x:Key="PB_FLYOUT_TITLE_CUST_EDIT">고객 수정</sys:String>
+    <sys:String x:Key="PB_FLYOUT_TITLE_CUST_INFO">고객 정보</sys:String>
+    <sys:String x:Key="PB_FLYOUT_TITLE_CUST_MEMO">메모</sys:String>
+    <sys:String x:Key="PB_FLYOUT_TITLE_SMS">고객({0}) SMS</sys:String>
+
+    <sys:String x:Key="PB_FLYOUT_LABEL_CUST_GROUP">그룹명</sys:String>
+    <sys:String x:Key="PB_FLYOUT_LABEL_CUST_COMPANY">회사명</sys:String>
+    <sys:String x:Key="PB_FLYOUT_LABEL_CUST_NAME">이름</sys:String>
+    <sys:String x:Key="PB_FLYOUT_LABEL_CUST_TITLE">직함</sys:String>
+    <sys:String x:Key="PB_FLYOUT_LABEL_CUST_TEL">전화번호</sys:String>
+    <sys:String x:Key="PB_FLYOUT_LABEL_CUST_CELLULAR">휴대번호</sys:String>
+    <sys:String x:Key="PB_FLYOUT_LABEL_CUST_EXT">내선번호</sys:String>
+    <sys:String x:Key="PB_FLYOUT_LABEL_CUST_EMAIL">이메일</sys:String>
+    <sys:String x:Key="PB_FLYOUT_LABEL_CUST_ADDR">회사주소</sys:String>
+    <sys:String x:Key="PB_FLYOUT_LABEL_CUST_MEMO">메모</sys:String>
+    <sys:String x:Key="PB_TAB0_TREE_TITLE">주소록</sys:String>
+    <sys:String x:Key="PB_TAB0_LIST_HEAD_0">성명</sys:String>
+    <sys:String x:Key="PB_TAB0_LIST_HEAD_1">회사명</sys:String>
+    <sys:String x:Key="PB_TAB0_LIST_HEAD_2">전화번호</sys:String>
+    <sys:String x:Key="PB_TAB0_LIST_HEAD_3">휴대전화</sys:String>
+    <sys:String x:Key="PB_TAB1_LIST_HEAD_0">발/수신자</sys:String>
+    <sys:String x:Key="PB_TAB1_LIST_HEAD_1">통화번호</sys:String>
+    <sys:String x:Key="PB_TAB1_LIST_HEAD_2">메모</sys:String>
+    <sys:String x:Key="PB_TAB1_LIST_HEAD_3">통화날짜</sys:String>
+    <sys:String x:Key="PB_TAB1_LIST_HEAD_4">통화시각</sys:String>
+    <sys:String x:Key="PB_TAB1_LIST_HEAD_5">통화시간</sys:String>
+    <sys:String x:Key="PB_TAB2_LIST_HEAD_0">수신</sys:String>
+    <sys:String x:Key="PB_TAB2_LIST_HEAD_1">전화번호</sys:String>
+    <sys:String x:Key="PB_TAB2_LIST_HEAD_2">보낸날짜</sys:String>
+    <sys:String x:Key="PB_TAB2_LIST_HEAD_3">보낸시각</sys:String>
+    <sys:String x:Key="PB_TAB2_LIST_HEAD_4">내용</sys:String>
+    <sys:String x:Key="PB_SEARCH_HEAD_0">성명</sys:String>
+    <sys:String x:Key="PB_SEARCH_HEAD_1">전화번호</sys:String>
+    <sys:String x:Key="PB_TB_WATERMARK_NUMBER">전화번호</sys:String>
+    <sys:String x:Key="PB_TREEVIEW_CUST_MENU_HEADER_0">그룹추가</sys:String>
+    <sys:String x:Key="PB_TREEVIEW_CUST_MENU_HEADER_1">그룹수정</sys:String>
+    <sys:String x:Key="PB_TREEVIEW_CUST_MENU_HEADER_2">그룹삭제</sys:String>
+    <sys:String x:Key="PB_TREEVIEW_CUST_MENU_HEADER_3">고객추가</sys:String>
+
+    <!-- CUSTOMER Insert / Modify / Remove -->
+    <sys:String x:Key="PB_DATAGRID_CUST_TOP_LABEL_0">고객추가</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_TOP_LABEL_1">고객수정</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_TOP_LABEL_2">고객정보</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_LABEL_0">그룹</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_LABEL_1">회사</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_LABEL_2">이름</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_LABEL_3">직함</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_LABEL_4">전화번호</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_LABEL_5">휴대전화</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_LABEL_6">내선번호</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_LABEL_7">이메일</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_LABEL_8">회사주소</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_LABEL_9">통화내역</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_CALL_LIST_HEADER_0">발/수신</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_CALL_LIST_HEADER_1">고객명</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_CALL_LIST_HEADER_2">전화번호</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_CALL_LIST_HEADER_3">통화날짜</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_CALL_LIST_HEADER_4">통화시각</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_CALL_LIST_HEADER_5">통화시간</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_CALL_LIST_HEADER_6">메모</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_MENU_HEADER_0">고객 추가</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_MENU_HEADER_1">고객 수정</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_MENU_HEADER_2">고객 삭제</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_MENU_HEADER_3">일반전화 걸기</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_MENU_HEADER_4">휴대전화 걸기</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_MENU_HEADER_5">내선전화 걸기</sys:String>
+    <sys:String x:Key="PB_DATAGRID_CUST_MENU_HEADER_6">SMS 보내기</sys:String>
+    <sys:String x:Key="MSG_ERR_CUSTOMER_EMPTY_GROUP" xml:space="preserve">그룹을 선택하세요.</sys:String>
+    <sys:String x:Key="MSG_ERR_CUSTOMER_EMPTY_NAME" xml:space="preserve">이름을 입력하세요.</sys:String>
+    <sys:String x:Key="MSG_ERR_CUSTOMER_EMPTY_TEL" xml:space="preserve">전화번호를 입력해 주세요.</sys:String>
+    <sys:String x:Key="MSG_ERR_CUSTOMER_REMOVE_EXIST_CALLLIST" xml:space="preserve">해당 고객의 통화 및 SMS 기록이 있어 삭제할 수 없습니다.&#x0d;&#x0a;해당 기록 부터 삭제한 후 다시 시도해 주세요.</sys:String>
+    <sys:String x:Key="MSG_ERR_GROUP_REMOVE_EXIST_CUSTOMER" xml:space="preserve">해당 그룹이 비어 있지 않습니다.&#x0d;&#x0a;해당 그룹의 고객을 삭제하거나 다른 그룹이로 이동 후 다시 시도해 주세요.</sys:String>
+
+    <!-- GROUP LIST -->
+    <sys:String x:Key="GROUPLIST_FIRST">그룹명</sys:String>
+
+    <!-- CALL LIST TAB -->
+    <sys:String x:Key="DG_CALLIST_HEADER_0">발/수신</sys:String>
+    <sys:String x:Key="DG_CALLIST_HEADER_1">이름</sys:String>
+    <sys:String x:Key="DG_CALLIST_HEADER_2">전화번호</sys:String>
+    <sys:String x:Key="DG_CALLIST_HEADER_3">날짜</sys:String>
+    <sys:String x:Key="DG_CALLIST_HEADER_4">시각</sys:String>
+    <sys:String x:Key="DG_CALLIST_HEADER_5">통화시간</sys:String>
+    <sys:String x:Key="DG_CALLIST_HEADER_6">메모</sys:String>
+    <sys:String x:Key="DG_CALLIST_MENIITEM_HEADER_0">전화걸기</sys:String>
+    <sys:String x:Key="DG_CALLIST_MENIITEM_HEADER_1">고객정보</sys:String>
+    <sys:String x:Key="DG_CALLIST_MENIITEM_HEADER_2">메모</sys:String>
+    <sys:String x:Key="DG_CALLIST_MENIITEM_HEADER_3">삭제</sys:String>
+
+    <!-- SMS LIST TAB -->
+    <sys:String x:Key="DG_SMS_HEADER_0">수신자</sys:String>
+    <sys:String x:Key="DG_SMS_HEADER_1">전화번호</sys:String>
+    <sys:String x:Key="DG_SMS_HEADER_2">날짜</sys:String>
+    <sys:String x:Key="DG_SMS_HEADER_3">시각</sys:String>
+    <sys:String x:Key="DG_SMS_HEADER_4">내용</sys:String>
+    <sys:String x:Key="DG_SMS_HEADER_5">결과</sys:String>
+    
+    <!-- SMS FLYOUT -->
+    <sys:String x:Key="SMS_FLYOUT_HEADER">SMS 보내기</sys:String>
+    <sys:String x:Key="SMS_TB_WATERMARK_0">번호추가</sys:String>
+    <sys:String x:Key="SMS_DG_HEADER_0">이름</sys:String>
+    <sys:String x:Key="SMS_DG_HEADER_1">전화번호</sys:String>
+    <sys:String x:Key="SMS_DG_MENUITEM_HEADER_0">SMS 보내기</sys:String>
+    <sys:String x:Key="SMS_DG_MENUITEM_HEADER_1">고객정보</sys:String>
+    <sys:String x:Key="SMS_DG_MENUITEM_HEADER_2">삭제</sys:String>
+    <sys:String x:Key="SMS_FLY_DG_MENUITEM_HEADER_0">삭제</sys:String>
+    <sys:String x:Key="SMS_FLY_MESSAGE_LENGTH_OVERFLOW">간</sys:String>
+
+    <!-- RECORDING MSG -->
+    <sys:String x:Key="ISRECORDING">녹취중입니다...</sys:String>
+    <sys:String x:Key="ISNOTRECORDING">녹취가 종료되었습니다.</sys:String>
+
+    <!-- COMMONS -->
+    <sys:String x:Key="BTN_TXT_YES">예</sys:String>
+    <sys:String x:Key="BTN_TXT_NO">아니오</sys:String>
+    <sys:String x:Key="BTN_TXT_OK">확인</sys:String>
+    <sys:String x:Key="BTN_TXT_CANCEL">취소</sys:String>
+    <sys:String x:Key="BTN_TXT_SAVE">저장</sys:String>
+    <sys:String x:Key="BTN_TXT_EXCEL">엑셀</sys:String>
+    <sys:String x:Key="BTN_TXT_SEARCH">검색</sys:String>
+    <sys:String x:Key="BTN_TXT_MEMO">메모</sys:String>
+    <sys:String x:Key="BTN_TXT_SMS_SEND">보내기</sys:String>
+    <sys:String x:Key="CMB_TXT_HEAD">:: 선택 ::</sys:String>
+    <sys:String x:Key="MSGBOX_TXT_TITLE">MiniCRM 경고</sys:String>
+    
+    <!-- ERROR MESSAGES -->
+    <sys:String x:Key="MSG_ERR_GROUP_UPDATE" xml:space="preserve">그룹명 변경 중 오류가 발생했습니다.&#x0d;&#x0a;계속해서 오류가 발생할 경우 관리자에게 문의하세요.</sys:String>
+    <!-- STRINGS END -->
+</ResourceDictionary>

@@ -1,0 +1,16 @@
+﻿<Application x:Class="MiniCRM.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MiniCRM"
+             StartupUri="Logon.xaml"
+             Startup="App_Startup">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="CommonDictionary.xaml"/>
+                <ResourceDictionary Source="Localization-ko_KR.xaml"/>
+                <ResourceDictionary Source="Dictionary-KT.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

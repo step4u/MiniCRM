@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:libs="clr-namespace:Com.Huen.Libs;assembly=HCSPHONELIBS"
+                    xmlns:local="clr-namespace:MiniCRM">
+    <Style TargetType="{x:Type Image}" x:Key="loginBg">
+        <Setter Property="Source" Value="skin/KT/login_bt_01_disable.gif"/>
+    </Style>
+</ResourceDictionary>

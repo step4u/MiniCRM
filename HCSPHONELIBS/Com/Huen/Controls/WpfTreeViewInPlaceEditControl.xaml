@@ -1,0 +1,40 @@
+﻿<TreeView x:Class="Com.Huen.Controls.WpfTreeViewInPlaceEditControl"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Com.Huen.Interfaces"
+        x:Name="wpfTreeViewInPlaceEditControl"
+        ItemsSource="{Binding}"
+        KeyDown="treeView_KeyDown"
+        SelectedItemChanged="treeView_SelectedItemChanged">
+    <!--<TreeView x:Name="treeView" ItemsSource="{Binding}" KeyDown="treeView_KeyDown" SelectedItemChanged="treeView_SelectedItemChanged">-->
+        <TreeView.Resources>
+            <Style TargetType="{x:Type TreeViewItem}">
+                <Setter Property="TreeViewItem.IsExpanded" Value="True"/>
+            </Style>
+            <HierarchicalDataTemplate DataType="{x:Type local:ITreeViewTop}" ItemsSource="{Binding Children}">
+                <Grid>
+                    <!-- Normal state of the header -->
+                    <TextBlock x:Name="textBlockHeader" Text="{Binding ElementName=editableTextBoxHeader, Path=Text, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="3,0" MouseLeftButtonDown="textBlockHeader_MouseLeftButtonDown"/>
+                    <!-- This state is active in the edit mode -->
+                    <TextBox x:Name="editableTextBoxHeader" Visibility="Hidden" MinWidth="100"
+                             Text="{Binding Name, UpdateSourceTrigger=LostFocus}"
+                             LostFocus="editableTextBoxHeader_LostFocus"
+                             IsVisibleChanged="editableTextBoxHeader_IsVisibleChanged"
+                             KeyDown="editableTextBoxHeader_KeyDown">
+                    </TextBox>
+            </Grid>
+                <!-- With triggers we switch between the three states of the header depending on its focused property and the control-level property "IsInEditMode" -->
+                <HierarchicalDataTemplate.Triggers>
+                    <MultiDataTrigger>
+                        <!-- Selected, editing is generally active - the text box is displayed -->
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}}" Value="True"/>
+                            <Condition Binding="{Binding IsInEditMode, ElementName=wpfTreeViewInPlaceEditControl}" Value="True"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="editableTextBoxHeader" Property="Visibility" Value="Visible" />
+                    </MultiDataTrigger>
+                </HierarchicalDataTemplate.Triggers>
+            </HierarchicalDataTemplate>
+        </TreeView.Resources>
+    <!--</TreeView>-->
+</TreeView>

@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniCRM", "MiniCRM\MiniCRM.csproj", "{356A8327-AE9A-4530-8D5F-20823CE452EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HCSPHONELIBS", "HCSPHONELIBS\HCSPHONELIBS.csproj", "{32BBA895-47EA-416C-98E1-9F6680F5AAF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COMMONRES", "COMMONRES\COMMONRES.csproj", "{478F73B6-4103-41EF-9CD1-085335C51FE5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{356A8327-AE9A-4530-8D5F-20823CE452EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{356A8327-AE9A-4530-8D5F-20823CE452EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{356A8327-AE9A-4530-8D5F-20823CE452EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{356A8327-AE9A-4530-8D5F-20823CE452EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32BBA895-47EA-416C-98E1-9F6680F5AAF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32BBA895-47EA-416C-98E1-9F6680F5AAF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32BBA895-47EA-416C-98E1-9F6680F5AAF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32BBA895-47EA-416C-98E1-9F6680F5AAF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{478F73B6-4103-41EF-9CD1-085335C51FE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{478F73B6-4103-41EF-9CD1-085335C51FE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{478F73B6-4103-41EF-9CD1-085335C51FE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{478F73B6-4103-41EF-9CD1-085335C51FE5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
