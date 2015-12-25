@@ -161,7 +161,7 @@
                         <ColumnDefinition Width="95*" MinWidth="100"/>
                         <ColumnDefinition Width="272*" MinWidth="200"/>
                     </Grid.ColumnDefinitions>
-                    <usercontrol:WpfTreeViewInPlaceEditControl x:Name="tvGroup" SelectedItemChanged="tvGroup_SelectedItemChanged" ContextMenuOpening="tvGroup_ContextMenuOpening_1" CancelEditEvent="tvGroup_CancelEditEvent" CommitEditedTextEvent="tvGroup_CommitEditedTextEvent" DeleteItemEvent="tvGroup_DeleteItemEvent">
+                    <usercontrol:WpfTreeViewInPlaceEditControl x:Name="tvGroup" SelectedItemChanged="tvGroup_SelectedItemChanged" ContextMenuOpening="tvGroup_ContextMenuOpening_1" CancelEditEvent="tvGroup_CancelEditEvent" CommitEditedTextEvent="tvGroup_CommitEditedTextEvent" DeleteItemEvent="tvGroup_DeleteItemEvent" LostFocusItemEvent="tvGroup_LostFocusItemEvent">
                         <TreeView.ItemContainerStyle>
                             <Style TargetType="{x:Type TreeViewItem}">
                                 <Setter Property="TreeViewItem.IsExpanded" Value="True"/>

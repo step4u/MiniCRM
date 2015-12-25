@@ -267,11 +267,12 @@ namespace MiniCRM
             {
                 int idx = lists[0].Children.IndexOf(selitem);
                 lists.remove(selitem);
-                if (lists[0].Children.Count > 0)
+
+                try
                 {
-                    lists[0].Children[idx - 1].IsSelected = true;
+                    lists[0].Children[idx].IsSelected = true;
                 }
-                else
+                catch (Exception ee)
                 {
                     lists[0].IsSelected = true;
                 }
@@ -1259,6 +1260,7 @@ namespace MiniCRM
             //        e.Handled = true;
             //    }
             //}
+
             if (e.Key == Key.Delete)
             {
                 var source = e.Source as WpfTreeViewInPlaceEditControl;
@@ -1275,11 +1277,12 @@ namespace MiniCRM
                 {
                     int idx = lists[0].Children.IndexOf(selitem);
                     lists.remove(selitem);
-                    if (lists[0].Children.Count > 0)
+
+                    try
                     {
-                        lists[0].Children[idx - 1].IsSelected = true;
+                        lists[0].Children[idx].IsSelected = true;
                     }
-                    else
+                    catch (Exception ee)
                     {
                         lists[0].IsSelected = true;
                     }
@@ -1443,11 +1446,12 @@ namespace MiniCRM
             {
                 int idx = lists[0].Children.IndexOf(selitem);
                 lists.remove(selitem);
-                if (lists[0].Children.Count > 0)
+
+                try
                 {
-                    lists[0].Children[idx - 1].IsSelected = true;
+                    lists[0].Children[idx].IsSelected = true;
                 }
-                else
+                catch (Exception ee)
                 {
                     lists[0].IsSelected = true;
                 }
@@ -1484,6 +1488,67 @@ namespace MiniCRM
                 {
                     e.Handled = true;
                     MessageBox.Show(Application.Current.FindResource("MSG_ERR_GROUP_REMOVE_EXIST_CUSTOMER").ToString(), Application.Current.FindResource("MSGBOX_TXT_TITLE").ToString());
+                }
+            }
+        }
+
+        private void tvGroup_LostFocusItemEvent(object sender, RoutedEventArgs e)
+        {
+            var source = sender as WpfTreeViewInPlaceEditControl;
+            var lists = source.ItemsSource as GroupLists;
+            var selitem = source.SelectedItem as GroupList;
+
+            if (string.IsNullOrEmpty(selitem.Name))
+            {
+                try
+                {
+                    if (selitem.Idx == -1)
+                    {
+                        selitem.IsSelected = false;
+                        lists[0].Children.Remove(selitem);
+                    }
+                }
+                catch (FbException ex)
+                {
+                    e.Handled = true;
+                }
+            }
+            else
+            {
+                var newValue = e.Source as TextBox;
+
+                GroupList olditem = new GroupList() { Idx = selitem.Idx, Name = selitem.Name, IsSelected = selitem.IsSelected, Children = new ObservableCollection<GroupList>(selitem.Children.ToList()) };
+
+                selitem.Name = newValue.Text;
+
+                try
+                {
+                    lists.update(selitem);
+                    selitem.IsSelected = false;
+
+                    var item = groupitems.FirstOrDefault(x => x.Idx == selitem.Idx);
+                    if (item == null)
+                    {
+                        groupitems.Add(selitem);
+                    }
+                    else
+                    {
+                        int idx = groupitems.IndexOf(item);
+                        groupitems = new ObservableCollection<GroupList>(glist.getlist());
+                        groupitems.Insert(0, new GroupList() { Idx = 0, Name = Application.Current.FindResource("CMB_TXT_HEAD").ToString() });
+                        cmbGroup.ItemsSource = null;
+                        cmbGroup.ItemsSource = groupitems;
+
+                        if (flyCustomer.IsOpen)
+                        {
+                            cmbGroup.SelectedIndex = idx;
+                        }
+                    }
+                }
+                catch (FbException ex)
+                {
+                    e.Handled = true;
+                    MessageBox.Show(Application.Current.FindResource("MSG_ERR_GROUP_UPDATE").ToString(), Application.Current.FindResource("MSGBOX_TXT_TITLE").ToString());
                 }
             }
         }

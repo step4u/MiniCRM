@@ -8,8 +8,10 @@
     <sys:String x:Key="WIN_SETTINGS_PBX_LABEL_IPADDRESS">아이피</sys:String>
     <sys:String x:Key="WIN_SETTINGS_PBX_LABEL_PORT">포트</sys:String>
     <sys:String x:Key="MSG_SETTINGS_PBX_IPADDRESS_EMPTY">PBX IP주소를 입력해 주세요.</sys:String>
-    <sys:String x:Key="MSG_SETTINGS_PBX_PORT_EMPTY">PBX IP주소를 입력해 주세요.</sys:String>
+    <sys:String x:Key="MSG_SETTINGS_PBX_PORT_EMPTY">PBX PORT를 입력해 주세요.</sys:String>
 
+    <sys:String x:Key="MSG_SETTINGS_PBX_IPADDRESS_EMPTY0">IP가 입력되지 않았습니다. 환경설정에서 IP를 입력해 주세요.</sys:String>
+    <sys:String x:Key="MSG_SETTINGS_PBX_PORT_EMPTY0">PORT가 입력되지 않았습니다. 환경설정에서 PORT를 입력해 주세요.</sys:String>
     <sys:String x:Key="MSG_LOGON_EMPTYID">아이디를 입력해 주세요.</sys:String>
     <sys:String x:Key="MSG_LOGON_EMPTYPWD">비밀번호를 입력해 주세요.</sys:String>
     <sys:String x:Key="MSG_LOGON_FAIL">아이디 또는 비밀번호가 맞지 않습니다.</sys:String>

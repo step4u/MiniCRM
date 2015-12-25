@@ -13,6 +13,7 @@ namespace Com.Huen.Controls
     public delegate void CommitEditedTextEventHandler(object sender, KeyEventArgs e);
     public delegate void CancelEditEventHandler(object sender, KeyEventArgs e);
     public delegate void DeleteItemEventHandler(object sender, KeyEventArgs e);
+    public delegate void LostFocusItemEventHandler(object sender, RoutedEventArgs e);
 
     /// <summary>
     /// Interaction logic for WpfTreeViewInPlaceEditControl.xaml
@@ -22,6 +23,7 @@ namespace Com.Huen.Controls
         public event CommitEditedTextEventHandler CommitEditedTextEvent;
         public event CancelEditEventHandler CancelEditEvent;
         public event DeleteItemEventHandler DeleteItemEvent;
+        public event LostFocusItemEventHandler LostFocusItemEvent;
 
         // INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -87,6 +89,12 @@ namespace Com.Huen.Controls
         // stop editing on lost focus
         private void editableTextBoxHeader_LostFocus(object sender, RoutedEventArgs e)
         {
+            if (IsInEditMode)
+            {
+                if (LostFocusItemEvent != null)
+                    LostFocusItemEvent(this, e);
+            }
+
             IsInEditMode = false;
         }
 

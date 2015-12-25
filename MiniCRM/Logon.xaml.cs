@@ -120,6 +120,20 @@ namespace MiniCRM
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(CoupleModeInfo.pbxipaddress))
+            {
+                MessageBox.Show(Application.Current.FindResource("MSG_SETTINGS_PBX_IPADDRESS_EMPTY0").ToString());
+                txtid.Focus();
+                return;
+            }
+
+            if (CoupleModeInfo.pbxport < 31001)
+            {
+                MessageBox.Show(Application.Current.FindResource("MSG_SETTINGS_PBX_PORT_EMPTY0").ToString());
+                txtid.Focus();
+                return;
+            }
+
             if (string.IsNullOrEmpty(txtid.Text.Trim()))
             {
                 MessageBox.Show(Application.Current.FindResource("MSG_LOGON_EMPTYID").ToString());
