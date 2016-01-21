@@ -93,6 +93,8 @@ namespace Com.Huen.Sockets
                 sockthread = new Thread(new ThreadStart(SendReceiveMessage));
                 sockthread.IsBackground = true;
                 sockthread.Start();
+
+                this.Register();
             }
             catch (SocketException e)
             {
@@ -115,8 +117,6 @@ namespace Com.Huen.Sockets
                 if (SocketNotStarted != null)
                     SocketNotStarted(this, e);
             }
-
-            // this.Register();
         }
 
         private void SendReceiveMessage()
@@ -162,6 +162,8 @@ namespace Com.Huen.Sockets
         {
             try
             {
+                if (sockthread == null) return;
+
                 if (sockthread.IsAlive)
                 {
                     sockthread.Abort();
@@ -174,6 +176,10 @@ namespace Com.Huen.Sockets
                 }
             }
             catch (SocketException e)
+            {
+                util.WriteLog(e.Message.ToString());
+            }
+            catch (Exception e)
             {
                 util.WriteLog(e.Message.ToString());
             }
@@ -212,6 +218,8 @@ namespace Com.Huen.Sockets
 
         public void UnRegister()
         {
+            if (client == null) return;
+
             CommandMsg _msg = GetCommandMsg(USRSTRUCTS.UNREGISTER_REQ);
             byte[] bytes = util.GetBytes(_msg);
 

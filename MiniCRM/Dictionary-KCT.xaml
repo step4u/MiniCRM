@@ -2,7 +2,717 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:libs="clr-namespace:Com.Huen.Libs;assembly=HCSPHONELIBS"
                     xmlns:local="clr-namespace:MiniCRM">
+    <!-- 디자인 START -->
+    <!-- Button Styles-->
+    <Style x:Key="btnBlueStyle1" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Rectangle RadiusY="10.5" RadiusX="10.5" Stroke="#FF848586"/>
+                        <Rectangle x:Name="rectangle" RadiusX="9" RadiusY="9" Margin="2.5,2.25,2.5,2.177">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFABEDFA"/>
+                                    <GradientStop Color="#FF39AAF8" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Rectangle RadiusX="5.669" RadiusY="5.669" Margin="3.331,1.837,3.502,0" Fill="#7FFFFFFF" Height="10.986" VerticalAlignment="Top" Width="Auto"/>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True"/>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Fill" TargetName="rectangle">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FFABEDFA"/>
+                                        <GradientStop Color="#FFDCBF18" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Fill" TargetName="rectangle">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FFABEDFA"/>
+                                        <GradientStop Color="#FF4EE4AF" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="btnBlueStyle2" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Background="Transparent" Margin="0,0,0,-5">
+                        <Rectangle Fill="White" HorizontalAlignment="Left" Height="25" Stroke="#FFD2D2D2" VerticalAlignment="Top" Width="75" RadiusY="7.437" RadiusX="7.437"/>
+                        <Rectangle x:Name="rectangle" HorizontalAlignment="Left" Height="21" VerticalAlignment="Top" Width="71" Margin="2,2,0,0" RadiusY="6.687" RadiusX="6.687">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF2D80EA" Offset="1"/>
+                                    <GradientStop Color="#FFABEFFC"/>
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Rectangle HorizontalAlignment="Left" Height="12" Margin="2,2,0,0" VerticalAlignment="Top" Width="71" Fill="#7FFFFFFF" RadiusY="5.5" RadiusX="5.5"/>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="7,2,7,1" Height="17" Width="61">
+                            <TextBlock.TextAlignment>
+                                <TextAlignment>Center</TextAlignment>
+                            </TextBlock.TextAlignment>
+                        </ContentPresenter>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True"/>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Fill" TargetName="rectangle">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FFDDB518" Offset="1"/>
+                                        <GradientStop Color="#FFABEFFC"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Fill" TargetName="rectangle">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FF0BE0A8" Offset="1"/>
+                                        <GradientStop Color="#FFABEFFC"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="btnGlassStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="Storyboard1">
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle1">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="rectangle">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="-33.333"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="42.667"/>
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="rectangle1">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="-33.333"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="42.667"/>
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="rectangle">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="0.333"/>
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="rectangle1">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="0.333"/>
+                            </DoubleAnimationUsingKeyFrames>
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="rectangle2">
+                                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF1A8E91"/>
+                            </ColorAnimationUsingKeyFrames>
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[0].(GradientStop.Color)" Storyboard.TargetName="rectangle2">
+                                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF0D7924"/>
+                            </ColorAnimationUsingKeyFrames>
+                        </Storyboard>
+                        <Storyboard x:Key="Storyboard2">
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[0].(GradientStop.Color)" Storyboard.TargetName="rectangle2">
+                                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF354D7D"/>
+                            </ColorAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+                    <Grid>
+                        <Rectangle x:Name="rectangle2" Stroke="#FF84A6A7" RadiusX="5.5" RadiusY="5.5">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF354D7D" Offset="1"/>
+                                    <GradientStop Color="#FF28AFB2"/>
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Rectangle VerticalAlignment="Top" RadiusX="5.25" RadiusY="5.25" Margin="2,1.5,2.25,0" Height="8.436" Fill="#FF72C2CB"/>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <Rectangle x:Name="rectangle" HorizontalAlignment="Left" Height="39.707" Margin="16,-7.041,0,-6.333" VerticalAlignment="Bottom" Width="8.167" RenderTransformOrigin="0.5,0.5" Fill="#66FFFFFF" Visibility="Hidden">
+                            <Rectangle.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform AngleX="24"/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <Rectangle x:Name="rectangle1" HorizontalAlignment="Left" Height="39.707" Margin="25.687,-8.039,0,-6.333" VerticalAlignment="Bottom" Width="2.797" RenderTransformOrigin="0.5,0.5" Fill="#66FFFFFF" Visibility="Hidden">
+                            <Rectangle.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform AngleX="24"/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True"/>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.ExitActions>
+                                <BeginStoryboard x:Name="Storyboard2_BeginStoryboard" Storyboard="{StaticResource Storyboard2}"/>
+                            </Trigger.ExitActions>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard x:Name="Storyboard1_BeginStoryboard" Storyboard="{StaticResource Storyboard1}"/>
+                            </Trigger.EnterActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True"/>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="btnImageStyle1" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Rectangle Margin="2" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="0" StrokeDashArray="1 2"/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Cursor" Value="Arrow"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" BorderBrush="{x:Null}" BorderThickness="0,0,0,0" Background="{x:Null}" SnapsToDevicePixels="True">
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="False">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#FFBEE6FD"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="#FF3C7FB1"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="False">
+                            <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="#FF2C628B"/>
+                        </Trigger>
+                        <Trigger Property="ToggleButton.IsChecked" Value="False">
+                            <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="#FF245A83"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" TargetName="border" Value="#FFF4F4F4"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#FF838383"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DialButtonStyle1" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Rectangle RadiusY="4" RadiusX="4" Stroke="#FF474747" StrokeThickness="1">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF474747" Offset="0"/>
+                                    <GradientStop Color="#FF040404" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <TextBlock.Foreground>#67C052</TextBlock.Foreground>
+                            <TextBlock.FontSize>16</TextBlock.FontSize>
+                            <TextBlock.FontWeight>Bold</TextBlock.FontWeight>
+                        </ContentPresenter>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True"/>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True"/>
+                        <Trigger Property="IsPressed" Value="True"/>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="btnPlusStyle1" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="Storyboard1">
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="path">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0.8"/>
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="path">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0.8"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                        <Storyboard x:Key="Storyboard2">
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="path">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="0.8"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="path">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="0.8"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+                    <Grid>
+                        <Path x:Name="path" Data="M17.834,0 L26.166,0 26.166,17.834 44,17.834 44,26.166 26.166,26.166 26.166,44 17.834,44 17.834,26.166 0,26.166 0,17.834 17.834,17.834 z" Fill="White" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                        <!--ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/-->
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True"/>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True"/>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.ExitActions>
+                                <BeginStoryboard x:Name="Storyboard2_BeginStoryboard" Storyboard="{StaticResource Storyboard2}"/>
+                            </Trigger.ExitActions>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource Storyboard1}"/>
+                            </Trigger.EnterActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Button Styles-->
+
+    <!-- TabItem style -->
+    <Style x:Key="TabItemStyle1" TargetType="TabItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Grid Name="Panel">
+                        <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Panel" Property="Background" Value="LightSkyBlue" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter TargetName="Panel" Property="Background" Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TabItemStyle2" TargetType="TabItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Gainsboro" CornerRadius="4,4,0,0" Margin="2,0">
+                        <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="LightSkyBlue" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="GhostWhite" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- DataGrid Header Style -->
+    <SolidColorBrush x:Key="PrimaryBrush" Color="#FF4169AA" />
+    <SolidColorBrush x:Key="PrimaryFont" Color="White" />
+    <Style x:Key="DataGridColumnHeaderStyle1" TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryFont}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Height" Value="33" />
+        <Setter Property="BorderBrush" Value="White"/>
+        <Setter Property="BorderThickness" Value="1,1,1,1"/>
+        <Setter Property="Padding" Value="5,5,5,5"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+    <!-- 디자인 END -->
+
+    <!-- 윈도우 ICON -->
+    <Style TargetType="{x:Type Window}" x:Key="icon1">
+        <Setter Property="Icon" Value="skin/KT/icon.ico"/>
+    </Style>
+    <!-- 윈도우 ICON -->
+
+    <!-- 로그인 -->
     <Style TargetType="{x:Type Image}" x:Key="loginBg">
-        <Setter Property="Source" Value="skin/KT/login_bt_01_disable.gif"/>
+        <Setter Property="Source" Value="skin/KCT/login_bg_standalone.gif"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnLogonOk_on">
+        <Setter Property="Source" Value="skin/KT/login_bt_01_on.gif"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnLogonOk_off">
+        <Setter Property="Source" Value="skin/KT/login_bt_01_off.gif"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnLogonQuit_on">
+        <Setter Property="Source" Value="skin/KT/login_bt_02_on.gif"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnLogonQuit_off">
+        <Setter Property="Source" Value="skin/KT/login_bt_02_off.gif"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnSettings_on">
+        <Setter Property="Source" Value="skin/KT/login_bt_05_on.gif"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnSettings_off">
+        <Setter Property="Source" Value="skin/KT/login_bt_05_off.gif"/>
+    </Style>
+
+    <!-- 메인창 -->
+    <!-- 메인 백그라운드 -->
+    <Style TargetType="{x:Type Image}" x:Key="main_bg">
+        <Setter Property="Source" Value="skin/KCT/bg_01.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="antena_on">
+        <Setter Property="Source" Value="skin/KT/antena_on.gif"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="antena_off">
+        <Setter Property="Source" Value="skin/KT/antena_off.gif"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="sms_on">
+        <Setter Property="Source" Value="skin/KT/sms_on.gif"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="sms_off">
+        <Setter Property="Source" Value="skin/KT/sms_off.gif"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="recfolder">
+        <Setter Property="Source" Value="skin/KT/folder.gif"/>
+    </Style>
+
+
+    <!-- 재다이얼 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btnRedial_off">
+        <Setter Property="Source" Value="skin/KT/bt_13_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnRedial_over">
+        <Setter Property="Source" Value="skin/KT/bt_13_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnRedial_down">
+        <Setter Property="Source" Value="skin/KT/bt_13_click.bmp"/>
+    </Style>
+
+    <!-- 돌려주기 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btnCallPush_off">
+        <Setter Property="Source" Value="skin/KT/bt_14_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnCallPush_over">
+        <Setter Property="Source" Value="skin/KT/bt_14_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnCallPush_down">
+        <Setter Property="Source" Value="skin/KT/bt_14_click.bmp"/>
+    </Style>
+
+    <!-- 당겨받기 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btnCallPull_off">
+        <Setter Property="Source" Value="skin/KT/bt_15_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnCallPull_over">
+        <Setter Property="Source" Value="skin/KT/bt_15_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnCallPull_down">
+        <Setter Property="Source" Value="skin/KT/bt_15_click.bmp"/>
+    </Style>
+
+    <!-- 통화내역 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btnCallList_off">
+        <Setter Property="Source" Value="skin/KT/bt_16_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnCallList_over">
+        <Setter Property="Source" Value="skin/KT/bt_16_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnCallList_down">
+        <Setter Property="Source" Value="skin/KT/bt_16_click.bmp"/>
+    </Style>
+
+    <!-- 다이얼 CALL 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btnCall_off">
+        <Setter Property="Source" Value="skin/KT/bt_call_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnCall_over">
+        <Setter Property="Source" Value="skin/KT/bt_call_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnCall_down">
+        <Setter Property="Source" Value="skin/KT/bt_call_click.bmp"/>
+    </Style>
+
+    <!-- 다이얼 CLR 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btnClear_off">
+        <Setter Property="Source" Value="skin/KT/bt_del_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnClear_over">
+        <Setter Property="Source" Value="skin/KT/bt_del_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnClear_down">
+        <Setter Property="Source" Value="skin/KT/bt_del_click.bmp"/>
+    </Style>
+
+    <!-- 다이얼 Hang up 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btnHangup_off">
+        <Setter Property="Source" Value="skin/KT/bt_end_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnHangup_over">
+        <Setter Property="Source" Value="skin/KT/bt_end_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnHangup_down">
+        <Setter Property="Source" Value="skin/KT/bt_end_click.bmp"/>
+    </Style>
+
+    <!-- 다이얼 1 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btn1_off">
+        <Setter Property="Source" Value="skin/KT/bt_01_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn1_over">
+        <Setter Property="Source" Value="skin/KT/bt_01_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn1_down">
+        <Setter Property="Source" Value="skin/KT/bt_01_click.bmp"/>
+    </Style>
+
+    <!-- 다이얼 2 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btn2_off">
+        <Setter Property="Source" Value="skin/KT/bt_02_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn2_over">
+        <Setter Property="Source" Value="skin/KT/bt_02_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn2_down">
+        <Setter Property="Source" Value="skin/KT/bt_02_click.bmp"/>
+    </Style>
+
+    <!-- 다이얼 3 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btn3_off">
+        <Setter Property="Source" Value="skin/KT/bt_03_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn3_over">
+        <Setter Property="Source" Value="skin/KT/bt_03_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn3_down">
+        <Setter Property="Source" Value="skin/KT/bt_03_click.bmp"/>
+    </Style>
+
+    <!-- 다이얼 4 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btn4_off">
+        <Setter Property="Source" Value="skin/KT/bt_04_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn4_over">
+        <Setter Property="Source" Value="skin/KT/bt_04_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn4_down">
+        <Setter Property="Source" Value="skin/KT/bt_04_click.bmp"/>
+    </Style>
+
+    <!-- 다이얼 5 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btn5_off">
+        <Setter Property="Source" Value="skin/KT/bt_05_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn5_over">
+        <Setter Property="Source" Value="skin/KT/bt_05_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn5_down">
+        <Setter Property="Source" Value="skin/KT/bt_05_click.bmp"/>
+    </Style>
+
+    <!-- 다이얼 6 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btn6_off">
+        <Setter Property="Source" Value="skin/KT/bt_06_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn6_over">
+        <Setter Property="Source" Value="skin/KT/bt_06_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn6_down">
+        <Setter Property="Source" Value="skin/KT/bt_06_click.bmp"/>
+    </Style>
+
+    <!-- 다이얼 7 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btn7_off">
+        <Setter Property="Source" Value="skin/KT/bt_07_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn7_over">
+        <Setter Property="Source" Value="skin/KT/bt_07_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn7_down">
+        <Setter Property="Source" Value="skin/KT/bt_07_click.bmp"/>
+    </Style>
+
+    <!-- 다이얼 8 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btn8_off">
+        <Setter Property="Source" Value="skin/KT/bt_08_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn8_over">
+        <Setter Property="Source" Value="skin/KT/bt_08_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn8_down">
+        <Setter Property="Source" Value="skin/KT/bt_08_click.bmp"/>
+    </Style>
+
+    <!-- 다이얼 9 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btn9_off">
+        <Setter Property="Source" Value="skin/KT/bt_09_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn9_over">
+        <Setter Property="Source" Value="skin/KT/bt_09_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn9_down">
+        <Setter Property="Source" Value="skin/KT/bt_09_click.bmp"/>
+    </Style>
+
+    <!-- 다이얼 * 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btnAsterisk_off">
+        <Setter Property="Source" Value="skin/KT/bt_10_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnAsterisk_over">
+        <Setter Property="Source" Value="skin/KT/bt_10_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnAsterisk_down">
+        <Setter Property="Source" Value="skin/KT/bt_10_click.bmp"/>
+    </Style>
+
+    <!-- 다이얼 0 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btn0_off">
+        <Setter Property="Source" Value="skin/KT/bt_11_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn0_over">
+        <Setter Property="Source" Value="skin/KT/bt_11_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btn0_down">
+        <Setter Property="Source" Value="skin/KT/bt_11_click.bmp"/>
+    </Style>
+
+    <!-- 다이얼 # 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btnSharp_off">
+        <Setter Property="Source" Value="skin/KT/bt_12_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnSharp_over">
+        <Setter Property="Source" Value="skin/KT/bt_12_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnSharp_down">
+        <Setter Property="Source" Value="skin/KT/bt_12_click.bmp"/>
+    </Style>
+
+    <!-- 하단 SMS 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btnSMS_off">
+        <Setter Property="Source" Value="skin/KT/bt_17_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnSMS_over">
+        <Setter Property="Source" Value="skin/KT/bt_17_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnSMS_down">
+        <Setter Property="Source" Value="skin/KT/bt_17_click.bmp"/>
+    </Style>
+
+    <!-- 하단 HOLD 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btnHOLD_off">
+        <Setter Property="Source" Value="skin/KT/bt_18_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnHOLD_over">
+        <Setter Property="Source" Value="skin/KT/bt_18_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnHOLD_down">
+        <Setter Property="Source" Value="skin/KT/bt_18_click.bmp"/>
+    </Style>
+
+    <!-- 하단 RECORD 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btnREC_off">
+        <Setter Property="Source" Value="skin/KT/bt_19_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnREC_over">
+        <Setter Property="Source" Value="skin/KT/bt_19_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnREC_down">
+        <Setter Property="Source" Value="skin/KT/bt_19_click.bmp"/>
+    </Style>
+
+    <!-- 하단 Address Book 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btnADDR_off">
+        <Setter Property="Source" Value="skin/KT/bt_22_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnADDR_over">
+        <Setter Property="Source" Value="skin/KT/bt_22_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnADDR_down">
+        <Setter Property="Source" Value="skin/KT/bt_22_click.bmp"/>
+    </Style>
+
+    <!-- 하단 Settings 버튼 -->
+    <Style TargetType="{x:Type Image}" x:Key="btnSETTING_off">
+        <Setter Property="Source" Value="skin/KT/bt_23_off.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnSETTING_over">
+        <Setter Property="Source" Value="skin/KT/bt_23_over.bmp"/>
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="btnSETTING_down">
+        <Setter Property="Source" Value="skin/KT/bt_23_click.bmp"/>
     </Style>
 </ResourceDictionary>

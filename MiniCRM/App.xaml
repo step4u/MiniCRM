@@ -9,7 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="CommonDictionary.xaml"/>
                 <ResourceDictionary Source="Localization-ko_KR.xaml"/>
-                <ResourceDictionary Source="Dictionary-KT.xaml"/>
+                <ResourceDictionary Source="Dictionary-KCT.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -107,7 +107,7 @@ namespace MiniCRM
             client.DisableRecordRequestSuccessEvent += Client_DisableRecordRequestSuccessEvent;
             client.EnableRecordRequestOnNatResultEvent += Client_EnableRecordRequestOnNatResultEvent;
 
-            client.Register();
+            // client.Register();
 
             // string str = Application.Current.FindResource("MSG_REG_SUCCESS").ToString();
             // Application.Current.Resources.MergedDictionaries[0] = (ResourceDictionary)Application.LoadComponent(new Uri("Localization-en_US.xaml", UriKind.Relative));
