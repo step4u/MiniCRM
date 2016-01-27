@@ -32,6 +32,25 @@ namespace MiniCRM
         private double width = 0.0d;
         private double height = 0.0d;
 
+        public Customer FlyCustomer
+        {
+            get
+            {
+                return this.flycustomer;
+            }
+            set
+            {
+                this.flycustomer = value;
+                this.flyCustomer.DataContext = this.flycustomer;
+            }
+        }
+
+        public CUSTOMER_STATE CUSTOMERSTATE
+        {
+            get { return this.CustState; }
+            set { this.CustState = value; }
+        }
+
         #region DataGrid datum
         private GroupLists glist;
         public Customers customers;
@@ -405,7 +424,7 @@ namespace MiniCRM
             flyCustomer.DataContext = flycustomer;
             // cmbGroup.SelectedValue = flycustomer.Group_Idx;
             flyCustomer.Header = Application.Current.FindResource("PB_FLYOUT_TITLE_CUST_EDIT").ToString();
-            dgridCustCallList.ItemsSource = GetCallListByCsutIdx(flycustomer.Idx, flycustomer.Cellular);
+            dgridCustCallList.ItemsSource = GetCallListByCustIdx(flycustomer.Idx, flycustomer.Cellular);
             flyCustomer.IsOpen = true;
 
             CustState = CUSTOMER_STATE.MODIFY;
@@ -528,11 +547,11 @@ namespace MiniCRM
                 Customer item = (Customer)view.SelectedItem;
                 smscustlist = new Customers();
                 smscustlist.Add(item);
-                dgSmsReceiverList.ItemsSource = smslist;
+                dgSmsReceiverList.ItemsSource = smscustlist;
             }
             else
             {
-                dgSmsReceiverList.ItemsSource = smslist;
+                dgSmsReceiverList.ItemsSource = smscustlist;
             }
 
             flySms.IsOpen = true;
@@ -540,12 +559,15 @@ namespace MiniCRM
 
         private void btnCustMemo_Click(object sender, RoutedEventArgs e)
         {
+            Customer tmpcustomer = FlyCustomer;
+            CallList tmpcall = calls.FirstOrDefault(x => x.Cust_Idx == tmpcustomer.Idx);
+            flyCustMemo.DataContext = tmpcall;
             flyCustMemo.IsOpen = true;
         }
 
         private void btnCustSave_Click(object sender, RoutedEventArgs e)
         {
-            // 고객 추가/수정 저장
+            // 고객 추가/수정 save
             if (cmbGroup.SelectedIndex < 1)
             {
                 MessageBox.Show(Application.Current.FindResource("MSG_ERR_CUSTOMER_EMPTY_GROUP").ToString(), Application.Current.FindResource("MSGBOX_TXT_TITLE").ToString());
@@ -637,6 +659,44 @@ namespace MiniCRM
             }
         }
 
+
+        private void btnMemoSave_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CallList item = flyCustMemo.DataContext as CallList;
+                TextBox tb = tbCustMemo;
+                item.Memo = tb.Text;
+                item.savememo();
+
+                CallList cl = dgCallList.SelectedItem as CallList;
+                if (cl == null)
+                {
+                    var items = dgCallList.ItemsSource as CallLists;
+                    cl = items.FirstOrDefault(x => x.Idx == item.Idx);
+                }
+
+                if (cl != null)
+                    cl.Memo = item.Memo;
+
+                CallList cl2 = dgridCustCallList.SelectedItem as CallList;
+                if (cl2 == null)
+                {
+                    var items = dgridCustCallList.ItemsSource as CallLists;
+                    cl2 = items.FirstOrDefault(x => x.Idx == item.Idx);
+                }
+
+                if (cl2 != null)
+                    cl2.Memo = item.Memo;
+
+                flyCustMemo.IsOpen = false;
+            }
+            catch (FbException ex)
+            {
+                util.WriteLog(ex.ErrorCode, ex.Message);
+            }
+        }
+
         private void flyCustomer_IsOpenChanged(object sender, RoutedEventArgs e)
         {
             if (((Flyout)e.Source).IsOpen)
@@ -647,6 +707,8 @@ namespace MiniCRM
             {
                 flyCustomer.Header = Application.Current.FindResource("PB_DATAGRID_CUST_TOP_LABEL_0").ToString();
                 btnCustSave.Visibility = Visibility.Visible;
+                btnCustMemo.Visibility = Visibility.Collapsed;
+                this.CustState = CUSTOMER_STATE.NONE;
             }
         }
 
@@ -709,7 +771,7 @@ namespace MiniCRM
             }
 
             btnCustSave.Visibility = Visibility.Visible;
-            dgridCustCallList.ItemsSource = GetCallListByCsutIdx(flycustomer.Idx, flycustomer.Cellular);
+            dgridCustCallList.ItemsSource = GetCallListByCustIdx(flycustomer.Idx, flycustomer.Cellular);
             flyCustomer.DataContext = flycustomer;
             flyCustomer.IsOpen = true;
         }
@@ -1199,7 +1261,7 @@ namespace MiniCRM
             return cust;
         }
 
-        public CallLists GetCallListByCsutIdx(int cust_idx, string cust_tel)
+        public CallLists GetCallListByCustIdx(int cust_idx, string cust_tel)
         {
             DataTable dt;
             CallLists lists = new CallLists();
@@ -1552,9 +1614,10 @@ namespace MiniCRM
                 }
             }
         }
+
     }
 
-    enum CUSTOMER_STATE
+    public enum CUSTOMER_STATE
     {
         NONE,
         ADD,

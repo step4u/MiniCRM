@@ -105,7 +105,7 @@
                             <DataGridTextColumn Header="{DynamicResource PB_DATAGRID_CUST_CALL_LIST_HEADER_6}" Binding="{Binding Path=Memo,Converter={StaticResource cutstr}}" Width="115" />
                             </DataGrid.Columns>
                         </DataGrid>
-                        <!--<Button x:Name="btnCustMemo" Content="{DynamicResource BTN_TXT_MEMO}" Style="{DynamicResource btnBlueStyle1}" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Margin="196,201,0,0" Width="60" Foreground="White" Click="btnCustMemo_Click" />-->
+                        <Button x:Name="btnCustMemo" Content="{DynamicResource BTN_TXT_MEMO}" Style="{DynamicResource btnBlueStyle1}" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Margin="196,201,0,0" Width="60" Foreground="White" Click="btnCustMemo_Click" Visibility="Collapsed" />
                         <Button x:Name="btnCustSave" Content="{DynamicResource BTN_TXT_SAVE}" Style="{DynamicResource btnBlueStyle1}" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Margin="261,201,0,0" Width="60" Foreground="White" Click="btnCustSave_Click" />
                         <Button x:Name="btnCustCancel" Content="{DynamicResource BTN_TXT_CANCEL}" Style="{DynamicResource btnBlueStyle1}" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Margin="326,201,0,0" Width="60" Foreground="White" Click="btnCustCancel_Click" />
                     </Grid>
@@ -114,7 +114,8 @@
 
             <Controls:Flyout x:Name="flyCustMemo" Header="{DynamicResource PB_FLYOUT_TITLE_CUST_MEMO}" Position="Right" Theme="Dark" IsOpen="False" Width="300">
                 <Grid>
-                    <TextBox x:Name="tbCustMemo" Text="{Binding Path=Memo, Mode=TwoWay}" Margin="10" TextWrapping="Wrap" Padding="4" AcceptsReturn="True" AcceptsTab="True" KeyUp="tbCustMemo_KeyUp"/>
+                    <TextBox x:Name="tbCustMemo" Text="{Binding Path=Memo, Mode=TwoWay}" Margin="10,10,10,50" TextWrapping="Wrap" Padding="4" AcceptsReturn="True" AcceptsTab="True"/>
+                    <Button x:Name="btnMemoSave" Content="{DynamicResource BTN_TXT_SAVE}" Style="{DynamicResource btnBlueStyle1}" HorizontalAlignment="Right" Height="23" VerticalAlignment="Bottom" Width="60" Foreground="Black" Click="btnMemoSave_Click" Margin="0,0,10,15" />
                 </Grid>
             </Controls:Flyout>
 

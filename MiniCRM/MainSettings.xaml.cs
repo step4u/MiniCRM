@@ -71,6 +71,10 @@ namespace MiniCRM
             }
 
             SaveIni(path);
+
+            MainWindow parent = this.Owner as MainWindow;
+            parent.StartPopup = chbPopup.IsChecked == true ? true : false;
+
             this.Close();
         }
 

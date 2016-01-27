@@ -4,13 +4,10 @@ using System.Windows.Input;
 using System;
 using System.Linq;
 using Com.Huen.Sockets;
-using System.Resources;
-using System.Reflection;
 using System.Windows.Threading;
 using System.Diagnostics;
 using Com.Huen.Libs;
 using Com.Huen.DataModel;
-using System.Windows.Media.Imaging;
 using FirebirdSql.Data.FirebirdClient;
 using System.Collections.ObjectModel;
 
@@ -37,6 +34,12 @@ namespace MiniCRM
         private bool IsRecording = false;
         private MinicrmButtonStates btnsatate;
 
+        public bool StartPopup
+        {
+            get { return this.startpopup; }
+            set { this.startpopup = value; }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -52,7 +55,7 @@ namespace MiniCRM
             pb.Owner = this;
             if (startpopup)
             {
-                pb.Show();
+                // pb.Show();
 
                 Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
                 {
@@ -485,10 +488,10 @@ namespace MiniCRM
 
                 pb.calls.add(curCall);
 
-                if (pb.Visibility == Visibility.Hidden)
+                if (pb.Visibility == Visibility.Collapsed)
                 {
                     pb.tabs.SelectedIndex = 1;
-                    pb.dgridCustCallList.ItemsSource = pb.GetCallListByCsutIdx(cust.Idx, curCall.Cust_Tel);
+                    pb.dgridCustCallList.ItemsSource = pb.GetCallListByCustIdx(cust.Idx, curCall.Cust_Tel);
                     pb.Visibility = Visibility.Visible;
                     pb.flyCustomer.Header = Application.Current.FindResource("PB_FLYOUT_TITLE_CUST_INFO").ToString();
                     pb.flyCustomer.IsOpen = true;
@@ -496,7 +499,7 @@ namespace MiniCRM
                 else
                 {
                     pb.tabs.SelectedIndex = 1;
-                    pb.dgridCustCallList.ItemsSource = pb.GetCallListByCsutIdx(cust.Idx, curCall.Cust_Tel);
+                    pb.dgridCustCallList.ItemsSource = pb.GetCallListByCustIdx(cust.Idx, curCall.Cust_Tel);
                     pb.flyCustomer.DataContext = cust;
                     pb.flyCustomer.Header = Application.Current.FindResource("PB_FLYOUT_TITLE_CUST_INFO").ToString();
                     pb.flyCustomer.IsOpen = true;
@@ -524,11 +527,13 @@ namespace MiniCRM
             string strmsg = string.Empty;
             if (cust.Idx < 1)
             {
+                pb.CUSTOMERSTATE = CUSTOMER_STATE.ADD;
                 cust.Cellular = msg.from_ext;
                 strmsg = Application.Current.FindResource("MSG_CALL_IN").ToString();
             }
             else
             {
+                pb.CUSTOMERSTATE = CUSTOMER_STATE.MODIFY;
                 curCall.Cust_Idx = cust.Idx;
                 curCall.Name = cust.Name;
                 strmsg = string.Format(Application.Current.FindResource("MSG_CALL_IN2").ToString(), cust.Name);
@@ -550,7 +555,7 @@ namespace MiniCRM
                         pb.Owner = this;
                     }
 
-                    pb.Show();
+                    // pb.Show();
                 }
 
                 SearchCondition1 con = new SearchCondition1();
@@ -566,21 +571,32 @@ namespace MiniCRM
 
                 pb.calls.add(curCall);
 
-                if (pb.Visibility == Visibility.Hidden)
+                if (pb.Visibility == Visibility.Collapsed || pb.Visibility == Visibility.Hidden)
                 {
                     pb.tabs.SelectedIndex = 1;
-                    pb.dgridCustCallList.ItemsSource = pb.GetCallListByCsutIdx(cust.Idx, curCall.Cust_Tel);
-                    pb.Visibility = Visibility.Visible;
+                    pb.dgridCustCallList.ItemsSource = pb.GetCallListByCustIdx(cust.Idx, curCall.Cust_Tel);
+                    pb.btnCustMemo.Visibility = Visibility.Visible;
+                    pb.FlyCustomer = cust;
                     pb.flyCustomer.Header = Application.Current.FindResource("PB_FLYOUT_TITLE_CUST_INFO").ToString();
                     pb.flyCustomer.IsOpen = true;
+
+                    if (startpopup)
+                    {
+                        pb.Visibility = Visibility.Visible;
+                    }
                 }
                 else
                 {
                     pb.tabs.SelectedIndex = 1;
-                    pb.dgridCustCallList.ItemsSource = pb.GetCallListByCsutIdx(cust.Idx, curCall.Cust_Tel);
-                    pb.flyCustomer.DataContext = cust;
+                    pb.dgridCustCallList.ItemsSource = pb.GetCallListByCustIdx(cust.Idx, curCall.Cust_Tel);
+                    pb.btnCustMemo.Visibility = Visibility.Visible;
+                    pb.FlyCustomer = cust;
                     pb.flyCustomer.Header = Application.Current.FindResource("PB_FLYOUT_TITLE_CUST_INFO").ToString();
-                    pb.flyCustomer.IsOpen = true;
+
+                    if (startpopup)
+                    {
+                        pb.flyCustomer.IsOpen = true;
+                    }
                 }
             }));
 
