@@ -26,6 +26,7 @@ namespace Com.Huen.Libs
         public static DateTime i_date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, i_day);
         public static int WordLength = 40;
         public static string _dbserverip = "58.141.60.250";
+        public static string pbxtype = "embeded";
 
         public static String GetFbDbStrConn()
         {
@@ -222,55 +223,83 @@ namespace Com.Huen.Libs
         // littleendian > bigendian
         public static byte[] GetBytes(Object st)
         {
-            if (BitConverter.IsLittleEndian)
-            {
-                System.Type t = st.GetType();
-                FieldInfo[] fieldInfo = t.GetFields();
+            System.Type t = st.GetType();
+            FieldInfo[] fieldInfo = t.GetFields();
 
-                foreach (FieldInfo fi in fieldInfo)
+            foreach (FieldInfo fi in fieldInfo)
+            {
+                if (fi.FieldType == typeof(System.Int16))
                 {
-                    if (fi.FieldType == typeof(System.Int16))
-                    {
-                        Int16 i = (Int16)fi.GetValue(st);
-                        byte[] b = BitConverter.GetBytes(i);
-                        byte[] br = b.Reverse().ToArray();
-                        fi.SetValueDirect(__makeref(st), BitConverter.ToInt16(br, 0));
-                    }
-                    else if (fi.FieldType == typeof(System.Int32))
-                    {
-                        Int32 i = (Int32)fi.GetValue(st);
-                        byte[] b = BitConverter.GetBytes(i);
-                        byte[] br = b.Reverse().ToArray();
-                        fi.SetValueDirect(__makeref(st), BitConverter.ToInt32(br, 0));
-                    }
-                    else if (fi.FieldType == typeof(System.Int64))
-                    {
-                        Int64 i = (Int64)fi.GetValue(st);
-                        byte[] b = BitConverter.GetBytes(i);
-                        byte[] br = b.Reverse().ToArray();
-                        fi.SetValueDirect(__makeref(st), BitConverter.ToInt64(br, 0));
-                    }
-                    else if (fi.FieldType == typeof(System.UInt16))
-                    {
-                        UInt16 i = (UInt16)fi.GetValue(st);
-                        byte[] b = BitConverter.GetBytes(i);
-                        byte[] br = b.Reverse().ToArray();
-                        fi.SetValueDirect(__makeref(st), BitConverter.ToUInt16(br, 0));
-                    }
-                    else if (fi.FieldType == typeof(System.UInt32))
-                    {
-                        UInt32 i = (UInt32)fi.GetValue(st);
-                        byte[] b = BitConverter.GetBytes(i);
-                        byte[] br = b.Reverse().ToArray();
-                        fi.SetValueDirect(__makeref(st), BitConverter.ToUInt32(br, 0));
-                    }
-                    else if (fi.FieldType == typeof(System.UInt64))
-                    {
-                        UInt64 i = (UInt64)fi.GetValue(st);
-                        byte[] b = BitConverter.GetBytes(i);
-                        byte[] br = b.Reverse().ToArray();
-                        fi.SetValueDirect(__makeref(st), BitConverter.ToUInt64(br, 0));
-                    }
+                    Int16 i = (Int16)fi.GetValue(st);
+                    byte[] b = BitConverter.GetBytes(i);
+                    byte[] br = null;
+                    if (CheckReverseByte())
+                        br = b.Reverse().ToArray();
+                    else
+                        br = b;
+
+                    fi.SetValueDirect(__makeref(st), BitConverter.ToInt16(br, 0));
+                }
+                else if (fi.FieldType == typeof(System.Int32))
+                {
+                    Int32 i = (Int32)fi.GetValue(st);
+                    byte[] b = BitConverter.GetBytes(i);
+                    byte[] br = null;
+                    if (CheckReverseByte())
+                        br = b.Reverse().ToArray();
+                    else
+                        br = b;
+
+                    fi.SetValueDirect(__makeref(st), BitConverter.ToInt32(br, 0));
+                }
+                else if (fi.FieldType == typeof(System.Int64))
+                {
+                    Int64 i = (Int64)fi.GetValue(st);
+                    byte[] b = BitConverter.GetBytes(i);
+                    byte[] br = null;
+                    if (CheckReverseByte())
+                        br = b.Reverse().ToArray();
+                    else
+                        br = b;
+
+                    fi.SetValueDirect(__makeref(st), BitConverter.ToInt64(br, 0));
+                }
+                else if (fi.FieldType == typeof(System.UInt16))
+                {
+                    UInt16 i = (UInt16)fi.GetValue(st);
+                    byte[] b = BitConverter.GetBytes(i);
+                    byte[] br = null;
+                    if (CheckReverseByte())
+                        br = b.Reverse().ToArray();
+                    else
+                        br = b;
+
+                    fi.SetValueDirect(__makeref(st), BitConverter.ToUInt16(br, 0));
+                }
+                else if (fi.FieldType == typeof(System.UInt32))
+                {
+                    UInt32 i = (UInt32)fi.GetValue(st);
+                    byte[] b = BitConverter.GetBytes(i);
+                    byte[] br = null;
+                    if (CheckReverseByte())
+                        br = b.Reverse().ToArray();
+                    else
+                        br = b;
+
+                    fi.SetValueDirect(__makeref(st), BitConverter.ToUInt32(br, 0));
+                }
+                else if (fi.FieldType == typeof(System.UInt64))
+                {
+                    UInt64 i = (UInt64)fi.GetValue(st);
+                    byte[] b = BitConverter.GetBytes(i);
+
+                    byte[] br = null;
+                    if (CheckReverseByte())
+                        br = b.Reverse().ToArray();
+                    else
+                        br = b;
+
+                    fi.SetValueDirect(__makeref(st), BitConverter.ToUInt64(br, 0));
                 }
             }
 
@@ -306,55 +335,88 @@ namespace Com.Huen.Libs
             T stuff = (T)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(T));
             handle.Free();
 
-            if (BitConverter.IsLittleEndian)
-            {
-                System.Type t = stuff.GetType();
-                FieldInfo[] fieldInfo = t.GetFields();
+            System.Type t = stuff.GetType();
+            FieldInfo[] fieldInfo = t.GetFields();
 
-                foreach (FieldInfo fi in fieldInfo)
+            foreach (FieldInfo fi in fieldInfo)
+            {
+                if (fi.FieldType == typeof(System.Int16))
                 {
-                    if (fi.FieldType == typeof(System.Int16))
-                    {
-                        Int16 i = (Int16)fi.GetValue(stuff);
-                        byte[] b = BitConverter.GetBytes(i);
-                        byte[] br = b.Reverse().ToArray();
-                        fi.SetValueDirect(__makeref(stuff), BitConverter.ToInt16(br, 0));
-                    }
-                    else if (fi.FieldType == typeof(System.Int32))
-                    {
-                        Int32 i = (Int32)fi.GetValue(stuff);
-                        byte[] b = BitConverter.GetBytes(i);
-                        byte[] br = b.Reverse().ToArray();
-                        fi.SetValueDirect(__makeref(stuff), BitConverter.ToInt32(br, 0));
-                    }
-                    else if (fi.FieldType == typeof(System.Int64))
-                    {
-                        Int64 i = (Int64)fi.GetValue(stuff);
-                        byte[] b = BitConverter.GetBytes(i);
-                        byte[] br = b.Reverse().ToArray();
-                        fi.SetValueDirect(__makeref(stuff), BitConverter.ToInt64(br, 0));
-                    }
-                    else if (fi.FieldType == typeof(System.UInt16))
-                    {
-                        UInt16 i = (UInt16)fi.GetValue(stuff);
-                        byte[] b = BitConverter.GetBytes(i);
-                        byte[] br = b.Reverse().ToArray();
-                        fi.SetValueDirect(__makeref(stuff), BitConverter.ToUInt16(br, 0));
-                    }
-                    else if (fi.FieldType == typeof(System.UInt32))
-                    {
-                        UInt32 i = (UInt32)fi.GetValue(stuff);
-                        byte[] b = BitConverter.GetBytes(i);
-                        byte[] br = b.Reverse().ToArray();
-                        fi.SetValueDirect(__makeref(stuff), BitConverter.ToUInt32(br, 0));
-                    }
-                    else if (fi.FieldType == typeof(System.UInt64))
-                    {
-                        UInt64 i = (UInt64)fi.GetValue(stuff);
-                        byte[] b = BitConverter.GetBytes(i);
-                        byte[] br = b.Reverse().ToArray();
-                        fi.SetValueDirect(__makeref(stuff), BitConverter.ToUInt64(br, 0));
-                    }
+                    Int16 i = (Int16)fi.GetValue(stuff);
+                    byte[] b = BitConverter.GetBytes(i);
+
+                    byte[] br = null;
+                    if (CheckReverseByte())
+                        br = b.Reverse().ToArray();
+                    else
+                        br = b;
+
+                    fi.SetValueDirect(__makeref(stuff), BitConverter.ToInt16(br, 0));
+                }
+                else if (fi.FieldType == typeof(System.Int32))
+                {
+                    Int32 i = (Int32)fi.GetValue(stuff);
+                    byte[] b = BitConverter.GetBytes(i);
+
+                    byte[] br = null;
+                    if (CheckReverseByte())
+                        br = b.Reverse().ToArray();
+                    else
+                        br = b;
+
+                    fi.SetValueDirect(__makeref(stuff), BitConverter.ToInt32(br, 0));
+                }
+                else if (fi.FieldType == typeof(System.Int64))
+                {
+                    Int64 i = (Int64)fi.GetValue(stuff);
+                    byte[] b = BitConverter.GetBytes(i);
+
+                    byte[] br = null;
+                    if (CheckReverseByte())
+                        br = b.Reverse().ToArray();
+                    else
+                        br = b;
+
+                    fi.SetValueDirect(__makeref(stuff), BitConverter.ToInt64(br, 0));
+                }
+                else if (fi.FieldType == typeof(System.UInt16))
+                {
+                    UInt16 i = (UInt16)fi.GetValue(stuff);
+                    byte[] b = BitConverter.GetBytes(i);
+
+                    byte[] br = null;
+                    if (CheckReverseByte())
+                        br = b.Reverse().ToArray();
+                    else
+                        br = b;
+
+                    fi.SetValueDirect(__makeref(stuff), BitConverter.ToUInt16(br, 0));
+                }
+                else if (fi.FieldType == typeof(System.UInt32))
+                {
+                    UInt32 i = (UInt32)fi.GetValue(stuff);
+                    byte[] b = BitConverter.GetBytes(i);
+
+                    byte[] br = null;
+                    if (CheckReverseByte())
+                        br = b.Reverse().ToArray();
+                    else
+                        br = b;
+
+                    fi.SetValueDirect(__makeref(stuff), BitConverter.ToUInt32(br, 0));
+                }
+                else if (fi.FieldType == typeof(System.UInt64))
+                {
+                    UInt64 i = (UInt64)fi.GetValue(stuff);
+                    byte[] b = BitConverter.GetBytes(i);
+
+                    byte[] br = null;
+                    if (CheckReverseByte())
+                        br = b.Reverse().ToArray();
+                    else
+                        br = b;
+
+                    fi.SetValueDirect(__makeref(stuff), BitConverter.ToUInt64(br, 0));
                 }
             }
 
@@ -842,18 +904,29 @@ namespace Com.Huen.Libs
 
         public static int IpAddress2Int(String address)
         {
-            int intAddress;
+            int intAddress = BitConverter.ToInt32(IPAddress.Parse(address).GetAddressBytes(), 0);
+            return intAddress;
+        }
 
+        private static bool CheckReverseByte()
+        {
+            bool reverse = false;
             if (BitConverter.IsLittleEndian)
             {
-                intAddress = BitConverter.ToInt32(IPAddress.Parse(address).GetAddressBytes(), 0);
+                if (util.pbxtype.Equals("embeded"))
+                    reverse = true;
+                else
+                    reverse = false;
             }
             else
             {
-                intAddress = BitConverter.ToInt32(IPAddress.Parse(address).GetAddressBytes().Reverse().ToArray(), 0);
+                if (util.pbxtype.Equals("embeded"))
+                    reverse = false;
+                else
+                    reverse = true;
             }
 
-            return intAddress;
+            return reverse;
         }
     }
 }

@@ -34,10 +34,20 @@ namespace MiniCRM
 
             pbxip = ini.IniReadValue("PBX", "IP");
             pbxport = ini.IniReadValue("PBX", "PORT");
+            util.pbxtype = ini.IniReadValue("PBX", "TYPE");
 
             txtIPAddress.Text = pbxip;
             txtPort.Text = pbxport;
             txtIPAddress.Focus();
+
+            if (util.pbxtype.Equals("embeded"))
+            {
+                deviceType0.IsChecked = true;
+            }
+            else
+            {
+                deviceType1.IsChecked = true;
+            }
         }
 
         private void SaveIni(string path)
@@ -49,6 +59,7 @@ namespace MiniCRM
 
             ini.IniWriteValue("PBX", "IP", txtIPAddress.Text.Trim());
             ini.IniWriteValue("PBX", "PORT", txtPort.Text.Trim());
+            ini.IniWriteValue("PBX", "TYPE", util.pbxtype.ToString());
 
             CoupleModeInfo.pbxipaddress = txtIPAddress.Text.Trim();
             CoupleModeInfo.pbxport = string.IsNullOrEmpty(txtPort.Text.Trim()) == false ? int.Parse(txtPort.Text.Trim()) : 31001;
@@ -66,6 +77,12 @@ namespace MiniCRM
             {
                 MessageBox.Show(Application.Current.FindResource("MSG_SETTINGS_PBX_PORT_EMPTY").ToString());
                 txtPort.Focus();
+                return;
+            }
+            if (!(deviceType0.IsChecked == true ? true : false) && !(deviceType1.IsChecked == true ? true : false))
+            {
+                MessageBox.Show(Application.Current.FindResource("MSG_SETTINGS_PBX_TYPE_EMPTY").ToString());
+                deviceType0.Focus();
                 return;
             }
 
@@ -88,6 +105,16 @@ namespace MiniCRM
         {
             Logon parent = (Logon)this.Owner;
             parent.txtid.Focus();
+        }
+
+        private void deviceType0_Click(object sender, RoutedEventArgs e)
+        {
+            util.pbxtype = "embeded";
+        }
+
+        private void deviceType1_Click(object sender, RoutedEventArgs e)
+        {
+            util.pbxtype = "cloud";
         }
     }
 }

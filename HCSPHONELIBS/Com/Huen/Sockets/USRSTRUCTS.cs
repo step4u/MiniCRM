@@ -133,9 +133,9 @@ namespace Com.Huen.Sockets
         public string to_ext;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
         public string userid;
-        public int ip;
-        public int port;
-        public int data_port;
+        public Int32 ip;
+        public Int32 port;
+        public Int32 data_port;
     }
     #endregion 커플모드 command Sructure
 

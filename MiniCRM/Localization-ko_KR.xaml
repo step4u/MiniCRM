@@ -9,6 +9,7 @@
     <sys:String x:Key="WIN_SETTINGS_PBX_LABEL_PORT">포트</sys:String>
     <sys:String x:Key="MSG_SETTINGS_PBX_IPADDRESS_EMPTY">PBX IP주소를 입력해 주세요.</sys:String>
     <sys:String x:Key="MSG_SETTINGS_PBX_PORT_EMPTY">PBX PORT를 입력해 주세요.</sys:String>
+    <sys:String x:Key="MSG_SETTINGS_PBX_TYPE_EMPTY">PBX TYPE을 선택해 주세요.</sys:String>
 
     <sys:String x:Key="MSG_SETTINGS_PBX_IPADDRESS_EMPTY0">IP가 입력되지 않았습니다. 환경설정에서 IP를 입력해 주세요.</sys:String>
     <sys:String x:Key="MSG_SETTINGS_PBX_PORT_EMPTY0">PORT가 입력되지 않았습니다. 환경설정에서 PORT를 입력해 주세요.</sys:String>

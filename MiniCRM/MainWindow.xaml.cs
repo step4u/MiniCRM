@@ -325,6 +325,8 @@ namespace MiniCRM
             left = string.IsNullOrEmpty(ini.IniReadValue("MAIN", "LEFT")) == false ? double.Parse(ini.IniReadValue("MAIN", "LEFT")) : 0.0d;
 
             startpopup = string.IsNullOrEmpty(ini.IniReadValue("ETC", "STARTPOPUP")) == false ? bool.Parse(ini.IniReadValue("ETC", "STARTPOPUP").ToString()) : false;
+
+            util.pbxtype = string.IsNullOrEmpty(ini.IniReadValue("PBX", "TYPE")) == false ? ini.IniReadValue("PBX", "TYPE").ToString() : "embeded";
         }
 
         private void SaveIni()
@@ -333,6 +335,7 @@ namespace MiniCRM
 
             ini.IniWriteValue("MAIN", "TOP", this.Top.ToString());
             ini.IniWriteValue("MAIN", "LEFT", this.Left.ToString());
+            ini.IniWriteValue("PBX", "TYPE", util.pbxtype);
         }
 
         private void Couplemodeclient_SocketErrorEvent(object obj, System.Net.Sockets.SocketException e)
