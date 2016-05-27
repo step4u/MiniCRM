@@ -140,6 +140,20 @@ namespace Com.Huen.Sockets
                 sockthread = new Thread(new ThreadStart(ReceiveMessage));
                 sockthread.IsBackground = true;
                 sockthread.Start();
+
+                if (sockthread.IsAlive)
+                {
+                    if (connectedmode == CONNECTED_MODE.NAT)
+                    {
+                        // RequestOnNat();
+                        timer = new System.Timers.Timer();
+                        timer.Interval = 40000;
+                        timer.Elapsed += Sessiontimer_Elapsed;
+                        timer.Start();
+
+                        this.KeepSession();
+                    }
+                }
             }
             catch (SocketException e)
             {
@@ -148,20 +162,6 @@ namespace Com.Huen.Sockets
             catch (Exception e)
             {
                 util.WriteLog(e.Message);
-            }
-            
-            if (sockthread.IsAlive)
-            {
-                if (connectedmode == CONNECTED_MODE.NAT)
-                {
-                    // RequestOnNat();
-                    timer = new System.Timers.Timer();
-                    timer.Interval = 40000;
-                    timer.Elapsed += Sessiontimer_Elapsed;
-                    timer.Start();
-
-                    this.KeepSession();
-                }
             }
         }
 
@@ -243,7 +243,7 @@ namespace Com.Huen.Sockets
                         _wavformat = WaveFormat.CreateCustomFormat(WaveFormatEncoding.G729, 8000, 1, 8000, 1, 8);
                         break;
                     default:
-                        _wavformat = WaveFormat.CreateMuLawFormat(8000, 1);
+                        _wavformat = WaveFormat.CreateALawFormat(8000, 1);
                         break;
                 }
 
@@ -372,8 +372,6 @@ namespace Com.Huen.Sockets
             List<RtpRecordInfo> lastlist = RecordIngList.ToList();
             foreach (RtpRecordInfo item in lastlist)
             {
-                item.MixRtp("final");
-
                 this.RecInstance_EndOfRtpStreamEvent(item, new EventArgs());
             }
 
