@@ -26,6 +26,8 @@ namespace Com.Huen.DataModel
         public DateTime Startdate { get; set; }
         private DateTime _Enddate;
         private string _Memo;
+        public string ext;
+        public string to_ext;
 
         public bool IsChecked
         {

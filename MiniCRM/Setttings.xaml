@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MiniCRM"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="MiniCRM.Setttins"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="MiniCRM.Setttings"
         mc:Ignorable="d"
         Title="{DynamicResource WIN_SETTINGS_TITLE}" Height="200" Width="300" SizeToContent="WidthAndHeight" ResizeMode="NoResize" ShowInTaskbar="False" Style="{DynamicResource icon1}" WindowStartupLocation="CenterOwner" Closing="Window_Closing">
     <Grid>

@@ -63,16 +63,18 @@
     <ManifestKeyFile>MiniCRM_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
     <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FirebirdSql.Data.FirebirdClient">
@@ -122,8 +124,8 @@
     <Compile Include="PhoneBook.xaml.cs">
       <DependentUpon>PhoneBook.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Setttins.xaml.cs">
-      <DependentUpon>Setttins.xaml</DependentUpon>
+    <Compile Include="Setttings.xaml.cs">
+      <DependentUpon>Setttings.xaml</DependentUpon>
     </Compile>
     <Page Include="CommonDictionary.xaml">
       <SubType>Designer</SubType>
@@ -172,7 +174,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Setttins.xaml">
+    <Page Include="Setttings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -197,7 +199,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

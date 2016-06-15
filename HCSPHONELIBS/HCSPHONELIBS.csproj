@@ -128,6 +128,7 @@
     <Compile Include="Com\Huen\DataModel\Account.cs" />
     <Compile Include="Com\Huen\DataModel\CDRs.cs" />
     <Compile Include="Com\Huen\DataModel\CallList.cs" />
+    <Compile Include="Com\Huen\DataModel\CurrentCall.cs" />
     <Compile Include="Com\Huen\DataModel\Interview.cs" />
     <Compile Include="Com\Huen\DataModel\Company.cs" />
     <Compile Include="Com\Huen\DataModel\InterceptorClient.cs" />

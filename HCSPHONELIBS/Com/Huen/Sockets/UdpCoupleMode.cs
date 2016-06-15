@@ -13,6 +13,8 @@ namespace Com.Huen.Sockets
     public delegate void RegFailEventHandler(object obj, CommandMsg msg);
     public delegate void UnRegSuccessEventHandler(object obj, CommandMsg msg);
     public delegate void MakeCallSuccessEventHandler(object obj, CommandMsg msg);
+    public delegate void MakeCallFailEventHandler(object obj, CommandMsg msg);
+
     public delegate void DropCallSuccessEventHandler(object obj, CommandMsg msg);
     public delegate void PickupCallSuccessEventHandler(object obj, CommandMsg msg);
     public delegate void TransferCallSuccessEventHandler(object obj, CommandMsg msg);
@@ -45,6 +47,7 @@ namespace Com.Huen.Sockets
         public event RegFailEventHandler RegFailEvent;
         public event UnRegSuccessEventHandler UnRegSuccessEvent;
         public event MakeCallSuccessEventHandler MakeCallSuccessEvent;
+        public event MakeCallFailEventHandler MakeCallFailEvent;
         public event DropCallSuccessEventHandler DropCallSuccessEvent;
         public event PickupCallSuccessEventHandler PickupCallSuccessEvent;
         public event TransferCallSuccessEventHandler TransferCallSuccessEvent;
@@ -249,9 +252,9 @@ namespace Com.Huen.Sockets
             }
         }
 
-        public void DropCall(string number)
+        public void DropCall(CallList call)
         {
-            CommandMsg msg = this.GetCommandMsg(USRSTRUCTS.DROP_CALL_REQ, number);
+            CommandMsg msg = this.GetCommandMsg(USRSTRUCTS.DROP_CALL_REQ, call);
             byte[] bytes = util.GetBytes(msg);
 
             try
@@ -408,6 +411,8 @@ namespace Com.Huen.Sockets
         {
             CommandMsg rcvMsg = util.GetObject<CommandMsg>(buffer);
 
+            util.WriteStructVal(rcvMsg);
+
             if (rcvMsg.cmd == USRSTRUCTS.SMS_SEND_REQ
                 || rcvMsg.cmd == USRSTRUCTS.SMS_INFO_REQ
                 || rcvMsg.cmd == USRSTRUCTS.SMS_RECV_REQ
@@ -447,7 +452,18 @@ namespace Com.Huen.Sockets
                     break;
                 case USRSTRUCTS.MAKE_CALL_RES:
                     if (MakeCallSuccessEvent != null)
-                        MakeCallSuccessEvent(this, rcvMsg);
+                    {
+                        switch (rcvMsg.status)
+                        {
+                            case USRSTRUCTS.STATUS_SUCCESS:
+                                MakeCallSuccessEvent(this, rcvMsg);
+                                break;
+                            case USRSTRUCTS.STATUS_FAIL:
+                            default:
+                                MakeCallFailEvent(this, rcvMsg);
+                                break;
+                        }
+                    }
                     break;
                 case USRSTRUCTS.DROP_CALL_RES:
                     if (DropCallSuccessEvent != null)
@@ -704,6 +720,99 @@ namespace Com.Huen.Sockets
                     msg.direct = USRSTRUCTS.DIRECT_OUTGOING;
                     msg.from_ext = CoupleModeInfo.userid;
                     msg.to_ext = toext;
+                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.port = 21010;
+                    break;
+            }
+
+            return msg;
+        }
+
+        public CommandMsg GetCommandMsg(byte st, CallList call)
+        {
+            CommandMsg msg = new CommandMsg() { cmd = st };
+
+            switch (st)
+            {
+                case USRSTRUCTS.REGISTER_REQ:
+                    msg.type = USRSTRUCTS.TYPE_COUPLEPHONE;
+                    msg.direct = USRSTRUCTS.DIRECT_OUTGOING;
+                    msg.from_ext = CoupleModeInfo.userid;
+                    msg.userid = string.Empty;
+                    break;
+                case USRSTRUCTS.UNREGISTER_REQ:
+                    msg.type = USRSTRUCTS.TYPE_COUPLEPHONE;
+                    msg.direct = USRSTRUCTS.DIRECT_OUTGOING;
+                    msg.from_ext = CoupleModeInfo.userid;
+                    msg.userid = string.Empty;
+                    break;
+                case USRSTRUCTS.MAKE_CALL_REQ:
+                    msg.type = USRSTRUCTS.TYPE_COUPLEPHONE;
+                    msg.from_ext = CoupleModeInfo.userid;
+                    msg.to_ext = call.to_ext;
+                    msg.direct = USRSTRUCTS.DIRECT_OUTGOING;
+                    msg.userid = CoupleModeInfo.userid;
+                    break;
+                case USRSTRUCTS.DROP_CALL_REQ:
+                    msg.type = USRSTRUCTS.TYPE_COUPLEPHONE;
+                    msg.from_ext = CoupleModeInfo.userid;
+                    msg.to_ext = call.to_ext;
+                    break;
+                case USRSTRUCTS.PICKUP_CALL_REQ:
+                    msg.type = USRSTRUCTS.TYPE_COUPLEPHONE;
+                    msg.direct = USRSTRUCTS.DIRECT_INCOMING;
+                    msg.from_ext = CoupleModeInfo.userid;
+                    msg.to_ext = call.to_ext;
+                    // msg.userid = CoupleModeInfo.userid;
+                    break;
+                case USRSTRUCTS.TRANSFER_CALL_REQ:
+                    msg.type = USRSTRUCTS.TYPE_COUPLEPHONE;
+                    msg.direct = USRSTRUCTS.DIRECT_OUTGOING;
+                    msg.from_ext = CoupleModeInfo.userid;
+                    msg.to_ext = call.to_ext;
+                    msg.userid = CoupleModeInfo.userid;
+                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.port = localport;
+                    break;
+                case USRSTRUCTS.HOLD_CALL_REQ:
+                    msg.type = USRSTRUCTS.TYPE_COUPLEPHONE;
+                    msg.direct = USRSTRUCTS.DIRECT_OUTGOING;
+                    msg.from_ext = CoupleModeInfo.userid;
+                    msg.to_ext = call.to_ext;
+                    msg.userid = CoupleModeInfo.userid;
+                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.port = localport;
+                    break;
+                case USRSTRUCTS.ACTIVE_CALL_REQ:
+                    msg.type = USRSTRUCTS.TYPE_COUPLEPHONE;
+                    msg.direct = USRSTRUCTS.DIRECT_OUTGOING;
+                    msg.from_ext = CoupleModeInfo.userid;
+                    msg.to_ext = call.to_ext;
+                    msg.userid = CoupleModeInfo.userid;
+                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.port = localport;
+                    break;
+                case USRSTRUCTS.ENABLE_CALL_RECORD_REQ:
+                    msg.type = USRSTRUCTS.TYPE_COUPLEPHONE;
+                    msg.direct = USRSTRUCTS.DIRECT_OUTGOING;
+                    msg.from_ext = CoupleModeInfo.userid;
+                    msg.to_ext = call.to_ext;
+                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.port = 21010;
+                    break;
+                case USRSTRUCTS.ENABLE_NAT_CALL_RECORD_REQ:
+                    msg.type = USRSTRUCTS.TYPE_COUPLEPHONE;
+                    msg.direct = USRSTRUCTS.DIRECT_OUTGOING;
+                    msg.from_ext = CoupleModeInfo.userid;
+                    msg.to_ext = call.to_ext;
+                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.port = 21010;
+                    break;
+                case USRSTRUCTS.DISABLE_CALL_RECORD_REQ:
+                    msg.type = USRSTRUCTS.TYPE_COUPLEPHONE;
+                    msg.direct = USRSTRUCTS.DIRECT_OUTGOING;
+                    msg.from_ext = CoupleModeInfo.userid;
+                    msg.to_ext = call.to_ext;
                     msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
                     msg.port = 21010;
                     break;

@@ -1,4 +1,4 @@
-﻿<Window x:Class="MiniCRM.MainWindow"
+﻿<Window x:Name="mainWin" x:Class="MiniCRM.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,12 @@
         xmlns:localcmd="clr-namespace:Com.Huen.Commands;assembly=HCSPHONELIBS"
         xmlns:dm="clr-namespace:Com.Huen.DataModel;assembly=HCSPHONELIBS"
         mc:Ignorable="d"
-        Title="{DynamicResource MSG_MAIN_TITLE}" Style="{DynamicResource icon1}" SizeToContent="WidthAndHeight" KeyDown="Window_KeyUp" Closing="Window_Closing" ResizeMode="CanMinimize" Closed="Window_Closed">
+        Title="{DynamicResource MSG_MAIN_TITLE}"
+        Style="{DynamicResource icon1}"
+        SizeToContent="WidthAndHeight"
+        Closing="Window_Closing"
+        ResizeMode="CanMinimize"
+        Closed="Window_Closed" PreviewKeyDown="mainWin_PreviewKeyDown">
     <Window.DataContext>
         <dm:MinicrmButtonStates />
     </Window.DataContext>

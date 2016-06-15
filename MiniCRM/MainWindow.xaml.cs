@@ -86,8 +86,10 @@ namespace MiniCRM
             this.Left = left;
 
             client = new UdpCoupleMode();
-            // couplemodeclient.CallInvitingEvent += Couplemodeclient_CallInvitingEvent;
-            // couplemodeclient.CallProceedingEvent += Couplemodeclient_CallProceedingEvent;
+            client.CallInvitingEvent += Couplemodeclient_CallInvitingEvent;
+            // client.CallProceedingEvent += Couplemodeclient_CallProceedingEvent;
+
+            client.MakeCallSuccessEvent += Client_MakeCallSuccessEvent;
             client.CallRingInEvent += Couplemodeclient_CallRingInEvent;
             client.CallRingOutEvent += Couplemodeclient_CallRingOutEvent;
             client.CallFobidenEvent += Couplemodeclient_CallFobidenEvent;
@@ -95,6 +97,7 @@ namespace MiniCRM
             client.CallTerminatedEvent += Couplemodeclient_CallTerminatedEvent;
             client.ServerNotRespondEvent += Couplemodeclient_ServerNotRespondEvent;
             client.SocketErrorEvent += Couplemodeclient_SocketErrorEvent;
+            
             client.RegSuccessEvent += Couplemodeclient_RegSuccessEvent;
             client.RegSuccessNatEvent += Couplemodeclient_RegSuccessNatEvent;
             client.UnRegSuccessEvent += Couplemodeclient_UnRegSuccessEvent;
@@ -113,8 +116,14 @@ namespace MiniCRM
             // client.Register();
 
             // string str = Application.Current.FindResource("MSG_REG_SUCCESS").ToString();
-            // Application.Current.Resources.MergedDictionaries[0] = (ResourceDictionary)Application.LoadComponent(new Uri("Localization-en_US.xaml", UriKind.Relative));
+            // Application.Current.Resources.MergedDictionaries[1] = (ResourceDictionary)Application.LoadComponent(new Uri("Localization-en_US.xaml", UriKind.Relative));
+            // Application.Current.Resources.MergedDictionaries[2] = (ResourceDictionary)Application.LoadComponent(new Uri("Dictionary-KCT.xaml", UriKind.Relative));
             // str = Application.Current.FindResource("MSG_REG_SUCCESS").ToString();
+        }
+
+        private void Client_MakeCallSuccessEvent(object obj, CommandMsg msg)
+        {
+            
         }
 
         private void Client_EnableRecordRequestOnNatResultEvent(object obj, CommandMsg msg)
@@ -405,6 +414,8 @@ namespace MiniCRM
                 IsRecording = false;
             }
 
+            if (curCall != null) curCall = null;
+
             this.UIChanging(msg.status);
         }
 
@@ -415,8 +426,7 @@ namespace MiniCRM
 
         private void Client_CallConnectedEvent(object obj, CommandMsg msg)
         {
-            if (curCall == null)
-                return;
+            if (curCall == null) return;
 
             if (curCall.Cust_Idx > 0)
             {
@@ -432,14 +442,15 @@ namespace MiniCRM
 
         private void Couplemodeclient_CallRingOutEvent(object obj, CommandMsg msg)
         {
-            if (curCall != null)
-                return;
+            if (curCall != null) return;
 
             curCall = new CallList()
             {
                 Direction = 0,
                 Cust_Tel = msg.to_ext,
                 Startdate = DateTime.Now,
+                ext = msg.from_ext,
+                to_ext = msg.to_ext
             };
 
             //CallLists calllists = new CallLists();
@@ -512,14 +523,15 @@ namespace MiniCRM
 
         private void Couplemodeclient_CallRingInEvent(object obj, CommandMsg msg)
         {
-            if (curCall != null)
-                return;
+            if (curCall != null) return;
 
             curCall = new CallList()
             {
                 Direction = 1,
                 Cust_Tel = msg.from_ext,
                 Startdate = DateTime.Now,
+                ext = msg.from_ext,
+                to_ext = msg.to_ext
             };
 
             Customer cust = pb.GetCustomerByTel(msg.from_ext);
@@ -619,9 +631,9 @@ namespace MiniCRM
             behavoir = BEHAVIOR_STATES.MAKECALL;
         }
 
-        public void DropCall(string tel)
+        public void DropCall(CallList curcall)
         {
-            client.DropCall(tel);
+            client.DropCall(curcall);
         }
 
         public void PickupCall(string tel)
@@ -679,9 +691,13 @@ namespace MiniCRM
                 case "☎":
                     if (string.IsNullOrEmpty(txt_number.Text.Trim()))
                     {
-                        // txt_message.Text = Application.Current.FindResource("MSG_CALL_STATES_EMPTY_NUM").ToString();
+                        txt_message.Text = Application.Current.FindResource("MSG_CALL_STATES_EMPTY_NUM").ToString();
                         e.Handled = true;
                         return;
+                    }
+                    else
+                    {
+                        txt_message.Text = string.Empty;
                     }
 
                     if (IsTransfer)
@@ -704,7 +720,7 @@ namespace MiniCRM
                     break;
                 case "☏":
                     if (curCall != null)
-                        this.DropCall(curCall.Cust_Tel);
+                        this.DropCall(curCall);
                     break;
                 case "1":
                 case "2":
@@ -721,6 +737,10 @@ namespace MiniCRM
                     txt_number.Text += whatis;
                     break;
             }
+
+            var scope = FocusManager.GetFocusScope(btn); // elem is the UIElement to unfocus
+            FocusManager.SetFocusedElement(scope, null); // remove logical focus
+            Keyboard.ClearFocus(); // remove keyboard focus
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
@@ -751,6 +771,10 @@ namespace MiniCRM
                     txt_message.Text = Application.Current.FindResource("MSG_CALL_STATES_EMPTY_NUM").ToString();
                     e.Handled = true;
                     return;
+                }
+                else
+                {
+                    txt_message.Text = string.Empty;
                 }
 
                 if (IsTransfer)
@@ -1079,6 +1103,120 @@ namespace MiniCRM
                         break;
                 }
             }));
+        }
+
+        private void mainWin_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            ModifierKeys modifierkey = e.KeyboardDevice.Modifiers;
+            Key key = (Key)e.Key;
+            string stringkey = string.Empty;
+            string txtdialnum = txt_number.Text;
+
+            if (key == Key.Back)
+            {
+                if (string.IsNullOrEmpty(txt_number.Text))
+                {
+                    return;
+                }
+
+                txt_number.Text = txtdialnum.Substring(0, txtdialnum.Length - 1);
+                return;
+            }
+            else if (key == Key.Delete)
+            {
+                txt_number.Text = string.Empty;
+            }
+            else if (key == Key.Enter)
+            {
+                if (string.IsNullOrEmpty(txt_number.Text.Trim()))
+                {
+                    txt_message.Text = Application.Current.FindResource("MSG_CALL_STATES_EMPTY_NUM").ToString();
+                    e.Handled = true;
+                    return;
+                }
+
+                if (IsTransfer)
+                    this.TransferCall(txt_number.Text.Trim());
+                else
+                    this.MakeCall(txt_number.Text.Trim());
+
+                //if (behavoir == BEHAVIOR_STATES.TRANSFER)
+                //{
+                //    this.TransferCall(txt_number.Text.Trim());
+                //}
+                //else if (behavoir == BEHAVIOR_STATES.NONE || behavoir == BEHAVIOR_STATES.NORMAL)
+                //{
+                //    this.MakeCall(txt_number.Text.Trim());
+                //}
+
+                return;
+            }
+
+            switch (key)
+            {
+                case Key.NumPad1:
+                case Key.D1:
+                    stringkey = "1";
+                    break;
+                case Key.NumPad2:
+                case Key.D2:
+                    stringkey = "2";
+                    break;
+                case Key.NumPad3:
+                case Key.D3:
+                    if (modifierkey == ModifierKeys.Shift)
+                    {
+                        stringkey = "#";
+                    }
+                    else
+                    {
+                        stringkey = "3";
+                    }
+                    break;
+                case Key.NumPad4:
+                case Key.D4:
+                    stringkey = "4";
+                    break;
+                case Key.NumPad5:
+                case Key.D5:
+                    stringkey = "5";
+                    break;
+                case Key.NumPad6:
+                case Key.D6:
+                    stringkey = "6";
+                    break;
+                case Key.NumPad7:
+                case Key.D7:
+                    stringkey = "7";
+                    break;
+                case Key.NumPad8:
+                case Key.D8:
+                    if (modifierkey == ModifierKeys.Shift)
+                    {
+                        stringkey = "*";
+                    }
+                    else
+                    {
+                        stringkey = "8";
+                    }
+                    break;
+                case Key.NumPad9:
+                case Key.D9:
+                    stringkey = "9";
+                    break;
+                case Key.NumPad0:
+                case Key.D0:
+                    stringkey = "0";
+                    break;
+                case Key.Multiply:
+                    stringkey = "*";
+                    break;
+                case Key.OemComma:
+                    stringkey = ",";
+                    break;
+            }
+
+            txt_number.Text += stringkey;
         }
     }
 

@@ -209,7 +209,7 @@ namespace MiniCRM
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
-            Setttins settings = new Setttins();
+            Setttings settings = new Setttings();
             settings.Owner = this;
             settings.Show();
         }

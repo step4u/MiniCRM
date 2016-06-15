@@ -529,6 +529,36 @@ namespace Com.Huen.Libs
             }
         }
 
+        public static void WriteStructVal(CommandMsg msg)
+        {
+            string userdatapath = string.Format(@"{0}\{1}", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MiniCRM");
+
+            if (!Directory.Exists(userdatapath))
+                Directory.CreateDirectory(userdatapath);
+
+            string logpath = string.Format(@"{0}\{1}", userdatapath, "log");
+
+            if (!Directory.Exists(logpath))
+                Directory.CreateDirectory(logpath);
+
+            string logfilepath = string.Format(@"{0}\{1}{2:00}{3:00}_struct.log", logpath, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            StreamWriter w = File.AppendText(logfilepath);
+            w.WriteLine("{0} {1}", DateTime.Now.ToLongDateString(), DateTime.Now.ToLongTimeString());
+            w.WriteLine("cmd: {0}, status: {1}, direct: {2}, userid: {3}, from_ext: {4}, to_ext: {5}", msg.cmd, msg.status, msg.direct, msg.userid, msg.from_ext, msg.to_ext);
+            w.WriteLine("---------------------------------------------------");
+            w.Flush();
+            w.Close();
+
+            foreach (var logfile in System.IO.Directory.EnumerateFiles(logpath))
+            {
+                if (File.GetCreationTime(logfile) < DateTime.Now.AddMonths(-2))
+                {
+                    if (File.Exists(logfile))
+                        File.Delete(logfile);
+                }
+            }
+        }
+
         // 프로시저 실행을 위한 값 셋팅 테이블
         public static DataTable MakeDataTable2Proc()
         {

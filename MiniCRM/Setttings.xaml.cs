@@ -9,13 +9,13 @@ namespace MiniCRM
     /// <summary>
     /// Interaction logic for Setttins.xaml
     /// </summary>
-    public partial class Setttins : Window
+    public partial class Setttings : Window
     {
         private string userdatapath = string.Empty;
         private string pbxip = string.Empty;
         private string pbxport = string.Empty;
 
-        public Setttins()
+        public Setttings()
         {
             InitializeComponent();
 
