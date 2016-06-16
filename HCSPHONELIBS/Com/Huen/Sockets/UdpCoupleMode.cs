@@ -16,12 +16,20 @@ namespace Com.Huen.Sockets
     public delegate void MakeCallFailEventHandler(object obj, CommandMsg msg);
 
     public delegate void DropCallSuccessEventHandler(object obj, CommandMsg msg);
+    public delegate void DropCallFailEventHandler(object obj, CommandMsg msg);
     public delegate void PickupCallSuccessEventHandler(object obj, CommandMsg msg);
+    public delegate void PickupCallFailEventHandler(object obj, CommandMsg msg);
+    
     public delegate void TransferCallSuccessEventHandler(object obj, CommandMsg msg);
+    public delegate void TransferCallFailEventHandler(object obj, CommandMsg msg);
     public delegate void HoldCallSuccessEventHandler(object obj, CommandMsg msg);
+    public delegate void HoldCallFailEventHandler(object obj, CommandMsg msg);
     public delegate void ActiveCallSuccessEventHandler(object obj, CommandMsg msg);
+    public delegate void ActiveCallFailEventHandler(object obj, CommandMsg msg);
     public delegate void EnableRecordRequestSuccessEventHandler(object obj, CommandMsg msg);
-    public delegate void EnableRecordRequestOnNatResultEventHandler(object obj, CommandMsg msg);
+    public delegate void EnableRecordRequestFailEventHandler(object obj, CommandMsg msg);
+    public delegate void EnableRecordRequestOnNatSuccessEventHandler(object obj, CommandMsg msg);
+    public delegate void EnableRecordRequestOnNatFailEventHandler(object obj, CommandMsg msg);
     public delegate void DisableRecordRequestSuccessEventHandler(object obj, CommandMsg msg);
     public delegate void CallInvitingEventHandler(object obj, CommandMsg msg);
     public delegate void CallProceedingEventHandler(object obj, CommandMsg msg);
@@ -49,12 +57,19 @@ namespace Com.Huen.Sockets
         public event MakeCallSuccessEventHandler MakeCallSuccessEvent;
         public event MakeCallFailEventHandler MakeCallFailEvent;
         public event DropCallSuccessEventHandler DropCallSuccessEvent;
+        public event DropCallFailEventHandler DropCallFailEvent;
         public event PickupCallSuccessEventHandler PickupCallSuccessEvent;
+        public event PickupCallFailEventHandler PickupCallFailEvent;
         public event TransferCallSuccessEventHandler TransferCallSuccessEvent;
+        public event TransferCallFailEventHandler TransferCallFailEvent;
         public event HoldCallSuccessEventHandler HoldCallSuccessEvent;
+        public event HoldCallFailEventHandler HoldCallFailEvent;
         public event ActiveCallSuccessEventHandler ActiveCallSuccessEvent;
+        public event ActiveCallFailEventHandler ActiveCallFailEvent;
         public event EnableRecordRequestSuccessEventHandler EnableRecordRequestSuccessEvent;
-        public event EnableRecordRequestOnNatResultEventHandler EnableRecordRequestOnNatResultEvent;
+        public event EnableRecordRequestFailEventHandler EnableRecordRequestFailEvent;
+        public event EnableRecordRequestOnNatSuccessEventHandler EnableRecordRequestOnNatSuccessEvent;
+        public event EnableRecordRequestOnNatFailEventHandler EnableRecordRequestOnNatFailEvent;
         public event DisableRecordRequestSuccessEventHandler DisableRecordRequestSuccessEvent;
         public event CallInvitingEventHandler CallInvitingEvent;
         public event CallProceedingEventHandler CallProceedingEvent;
@@ -451,47 +466,116 @@ namespace Com.Huen.Sockets
                         UnRegSuccessEvent(this, rcvMsg);
                     break;
                 case USRSTRUCTS.MAKE_CALL_RES:
-                    if (MakeCallSuccessEvent != null)
+                    switch (rcvMsg.status)
                     {
-                        switch (rcvMsg.status)
-                        {
-                            case USRSTRUCTS.STATUS_SUCCESS:
+                        case USRSTRUCTS.STATUS_SUCCESS:
+                            if (MakeCallSuccessEvent != null)
                                 MakeCallSuccessEvent(this, rcvMsg);
-                                break;
-                            case USRSTRUCTS.STATUS_FAIL:
-                            default:
+                            break;
+                        case USRSTRUCTS.STATUS_FAIL:
+                        default:
+                            if (MakeCallFailEvent != null)
                                 MakeCallFailEvent(this, rcvMsg);
-                                break;
-                        }
+                            break;
                     }
                     break;
                 case USRSTRUCTS.DROP_CALL_RES:
-                    if (DropCallSuccessEvent != null)
-                        DropCallSuccessEvent(this, rcvMsg);
+                    switch (rcvMsg.status)
+                    {
+                        case USRSTRUCTS.STATUS_SUCCESS:
+                            if (DropCallSuccessEvent != null)
+                                DropCallSuccessEvent(this, rcvMsg);
+                            break;
+                        case USRSTRUCTS.STATUS_FAIL:
+                        default:
+                            if (DropCallFailEvent != null)
+                                DropCallFailEvent(this, rcvMsg);
+                            break;
+                    }
                     break;
                 case USRSTRUCTS.PICKUP_CALL_RES:
-                    if (PickupCallSuccessEvent != null)
-                        PickupCallSuccessEvent(this, rcvMsg);
+                    switch (rcvMsg.status)
+                    {
+                        case USRSTRUCTS.STATUS_SUCCESS:
+                            if (PickupCallSuccessEvent != null)
+                                PickupCallSuccessEvent(this, rcvMsg);
+                            break;
+                        case USRSTRUCTS.STATUS_FAIL:
+                        default:
+                            if (PickupCallFailEvent != null)
+                                PickupCallFailEvent(this, rcvMsg);
+                            break;
+                    }
                     break;
                 case USRSTRUCTS.TRANSFER_CALL_RES:
-                    if (TransferCallSuccessEvent != null)
-                        TransferCallSuccessEvent(this, rcvMsg);
+                    switch (rcvMsg.status)
+                    {
+                        case USRSTRUCTS.STATUS_SUCCESS:
+                            if (TransferCallSuccessEvent != null)
+                                TransferCallSuccessEvent(this, rcvMsg);
+                            break;
+                        case USRSTRUCTS.STATUS_FAIL:
+                        default:
+                            if (TransferCallFailEvent != null)
+                                TransferCallFailEvent(this, rcvMsg);
+                            break;
+                    }
                     break;
                 case USRSTRUCTS.HOLD_CALL_RES:
-                    if (HoldCallSuccessEvent != null)
-                        HoldCallSuccessEvent(this, rcvMsg);
+                    switch (rcvMsg.status)
+                    {
+                        case USRSTRUCTS.STATUS_SUCCESS:
+                            if (HoldCallSuccessEvent != null)
+                                HoldCallSuccessEvent(this, rcvMsg);
+                            break;
+                        case USRSTRUCTS.STATUS_FAIL:
+                        default:
+                            if (HoldCallFailEvent != null)
+                                HoldCallFailEvent(this, rcvMsg);
+                            break;
+                    }
                     break;
                 case USRSTRUCTS.ACTIVE_CALL_RES:
-                    if (ActiveCallSuccessEvent != null)
-                        ActiveCallSuccessEvent(this, rcvMsg);
+                    switch (rcvMsg.status)
+                    {
+                        case USRSTRUCTS.STATUS_SUCCESS:
+                            if (ActiveCallSuccessEvent != null)
+                                ActiveCallSuccessEvent(this, rcvMsg);
+                            break;
+                        case USRSTRUCTS.STATUS_FAIL:
+                        default:
+                            if (ActiveCallFailEvent != null)
+                                ActiveCallFailEvent(this, rcvMsg);
+                            break;
+                    }
                     break;
                 case USRSTRUCTS.ENABLE_CALL_RECORD_RES:
-                    if (EnableRecordRequestSuccessEvent != null)
-                        EnableRecordRequestSuccessEvent(this, rcvMsg);
+                    switch (rcvMsg.status)
+                    {
+                        case USRSTRUCTS.STATUS_SUCCESS:
+                            if (EnableRecordRequestSuccessEvent != null)
+                                EnableRecordRequestSuccessEvent(this, rcvMsg);
+                            break;
+                        case USRSTRUCTS.STATUS_FAIL:
+                        default:
+                            if (EnableRecordRequestFailEvent != null)
+                                EnableRecordRequestFailEvent(this, rcvMsg);
+                            break;
+                    }
                     break;
                 case USRSTRUCTS.ENABLE_NAT_CALL_RECORD_RES:
-                    if (EnableRecordRequestOnNatResultEvent != null)
-                        EnableRecordRequestOnNatResultEvent(this, rcvMsg);
+                    switch (rcvMsg.status)
+                    {
+                        case USRSTRUCTS.STATUS_SUCCESS:
+                            if (EnableRecordRequestOnNatSuccessEvent != null)
+                                EnableRecordRequestOnNatSuccessEvent(this, rcvMsg);
+                            break;
+                        case USRSTRUCTS.STATUS_FAIL:
+                        default:
+                            if (EnableRecordRequestOnNatFailEvent != null)
+                                EnableRecordRequestOnNatFailEvent(this, rcvMsg);
+                            break;
+                    }
                     break;
                 case USRSTRUCTS.DISABLE_CALL_RECORD_RES:
                     if (DisableRecordRequestSuccessEvent != null)

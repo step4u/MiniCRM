@@ -89,7 +89,6 @@ namespace MiniCRM
             client.CallInvitingEvent += Couplemodeclient_CallInvitingEvent;
             // client.CallProceedingEvent += Couplemodeclient_CallProceedingEvent;
 
-            client.MakeCallSuccessEvent += Client_MakeCallSuccessEvent;
             client.CallRingInEvent += Couplemodeclient_CallRingInEvent;
             client.CallRingOutEvent += Couplemodeclient_CallRingOutEvent;
             client.CallFobidenEvent += Couplemodeclient_CallFobidenEvent;
@@ -104,14 +103,21 @@ namespace MiniCRM
             client.SmsSentInfoRequestedEvent += Client_SmsSentInfoRequestedEvent;
             client.SmsSentCompletedEvent += Client_SmsSentCompletedEvent;
             client.SmsRecievedRequestedEvent += Client_SmsRecievedRequestedEvent;
+            client.MakeCallSuccessEvent += Client_MakeCallSuccessEvent;
+            client.MakeCallFailEvent += Client_MakeCallFailEvent;
             client.DropCallSuccessEvent += Client_DropCallSuccessEvent;
+            client.DropCallFailEvent += Client_DropCallFailEvent;
             client.PickupCallSuccessEvent += Client_PickupCallSuccessEvent;
+            client.PickupCallFailEvent += Client_PickupCallFailEvent;
             client.TransferCallSuccessEvent += Client_TransferCallSuccessEvent;
+            client.TransferCallFailEvent += Client_TransferCallFailEvent;
             client.HoldCallSuccessEvent += Client_HoldCallSuccessEvent;
+            client.HoldCallFailEvent += Client_HoldCallFailEvent;
             client.ActiveCallSuccessEvent += Client_ActiveCallSuccessEvent;
+            client.ActiveCallFailEvent += Client_ActiveCallFailEvent;
             client.EnableRecordRequestSuccessEvent += Client_EnableRecordRequestSuccessEvent;
             client.DisableRecordRequestSuccessEvent += Client_DisableRecordRequestSuccessEvent;
-            client.EnableRecordRequestOnNatResultEvent += Client_EnableRecordRequestOnNatResultEvent;
+            client.EnableRecordRequestOnNatSuccessEvent += Client_EnableRecordRequestOnNatSuccessEvent;
 
             // client.Register();
 
@@ -121,30 +127,26 @@ namespace MiniCRM
             // str = Application.Current.FindResource("MSG_REG_SUCCESS").ToString();
         }
 
+
+
         private void Client_MakeCallSuccessEvent(object obj, CommandMsg msg)
         {
             
         }
 
-        private void Client_EnableRecordRequestOnNatResultEvent(object obj, CommandMsg msg)
+        private void Client_MakeCallFailEvent(object obj, CommandMsg msg)
         {
-            recorder = new RTPRecorderCouple(21011, CONNECTED_MODE.NAT);
+
         }
 
-        private void Client_DisableRecordRequestSuccessEvent(object obj, CommandMsg msg)
+        private void Client_DropCallSuccessEvent(object obj, CommandMsg msg)
         {
-            if (msg.status == 0)
-            {
-                if (recorder != null)
-                {
-                    recorder.Close();
-                    recorder.Dispose();
-                    recorder = null;
-                }
-            }
 
-            IsRecording = false;
-            this.SetMessage(Application.Current.FindResource("ISNOTRECORDING").ToString());
+        }
+
+        private void Client_DropCallFailEvent(object obj, CommandMsg msg)
+        {
+
         }
 
         private void Client_EnableRecordRequestSuccessEvent(object obj, CommandMsg msg)
@@ -168,66 +170,62 @@ namespace MiniCRM
             this.SetMessage(Application.Current.FindResource("ISRECORDING").ToString());
         }
 
+        private void Client_DisableRecordRequestSuccessEvent(object obj, CommandMsg msg)
+        {
+            if (recorder != null)
+            {
+                recorder.Close();
+                recorder.Dispose();
+                recorder = null;
+            }
+
+            IsRecording = false;
+            this.SetMessage(Application.Current.FindResource("ISNOTRECORDING").ToString());
+        }
+
+        private void Client_EnableRecordRequestOnNatSuccessEvent(object obj, CommandMsg msg)
+        {
+            recorder = new RTPRecorderCouple(21011, CONNECTED_MODE.NAT);
+        }
+
         private void Client_ActiveCallSuccessEvent(object obj, CommandMsg msg)
         {
-            if (msg.status == 0)
-            {
 
-            }
-            else
-            {
+        }
 
-            }
+        private void Client_ActiveCallFailEvent(object obj, CommandMsg msg)
+        {
+
         }
 
         private void Client_HoldCallSuccessEvent(object obj, CommandMsg msg)
         {
-            if (msg.status == 0)
-            {
 
-            }
-            else
-            {
+        }
 
-            }
+        private void Client_HoldCallFailEvent(object obj, CommandMsg msg)
+        {
+            
         }
 
         private void Client_TransferCallSuccessEvent(object obj, CommandMsg msg)
         {
-            if (msg.status == 0)
-            {
-
-            }
-            else
-            {
-
-            }
 
             behavoir = BEHAVIOR_STATES.NONE;
         }
 
-        private void Client_PickupCallSuccessEvent(object obj, CommandMsg msg)
+        private void Client_TransferCallFailEvent(object obj, CommandMsg msg)
         {
-            if (msg.status == 0)
-            {
 
-            }
-            else
-            {
-
-            }
         }
 
-        private void Client_DropCallSuccessEvent(object obj, CommandMsg msg)
+        private void Client_PickupCallSuccessEvent(object obj, CommandMsg msg)
         {
-            if (msg.status == 0)
-            {
+        }
 
-            }
-            else
-            {
+        private void Client_PickupCallFailEvent(object obj, CommandMsg msg)
+        {
 
-            }
         }
 
         private void Client_SmsRecievedRequestedEvent(object obj, sms_msg msg)
