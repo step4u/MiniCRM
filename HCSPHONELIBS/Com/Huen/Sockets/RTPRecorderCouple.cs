@@ -363,10 +363,13 @@ namespace Com.Huen.Sockets
 
         public void Close()
         {
-            if (sockthread.IsAlive)
+            if (sockthread != null)
             {
-                sockthread.Abort();
-                sockthread = null;
+                if (sockthread.IsAlive)
+                {
+                    sockthread.Abort();
+                    sockthread = null;
+                }
             }
 
             List<RtpRecordInfo> lastlist = RecordIngList.ToList();

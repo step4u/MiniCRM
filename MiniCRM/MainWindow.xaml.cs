@@ -186,6 +186,9 @@ namespace MiniCRM
         private void Client_EnableRecordRequestOnNatSuccessEvent(object obj, CommandMsg msg)
         {
             recorder = new RTPRecorderCouple(21011, CONNECTED_MODE.NAT);
+
+            IsRecording = true;
+            this.SetMessage(Application.Current.FindResource("ISRECORDING").ToString());
         }
 
         private void Client_ActiveCallSuccessEvent(object obj, CommandMsg msg)
@@ -1044,7 +1047,7 @@ namespace MiniCRM
             else
                 client.RecordStartRequest(curCall.Cust_Tel);
 
-            IsRecording = !IsRecording;
+            // IsRecording = !IsRecording;
         }
 
         private void UIChanging(byte status)

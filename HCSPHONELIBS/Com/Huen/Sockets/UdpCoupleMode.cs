@@ -553,6 +553,7 @@ namespace Com.Huen.Sockets
                     switch (rcvMsg.status)
                     {
                         case USRSTRUCTS.STATUS_SUCCESS:
+                        case USRSTRUCTS.STATUS_NAT_SUCCESS:
                             if (EnableRecordRequestSuccessEvent != null)
                                 EnableRecordRequestSuccessEvent(this, rcvMsg);
                             break;
@@ -676,7 +677,7 @@ namespace Com.Huen.Sockets
                     msg.from_ext = CoupleModeInfo.userid;
                     //msg.to_ext = to_ext;
                     msg.userid = string.Empty;
-                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.ip = DistinguishIpBlock.IpAddress2Int();
                     msg.port = localport;
                     break;
                 case USRSTRUCTS.UNREGISTER_REQ:
@@ -686,7 +687,7 @@ namespace Com.Huen.Sockets
                     msg.from_ext = CoupleModeInfo.userid;
                     //msg.to_ext = to_ext;
                     msg.userid = string.Empty;
-                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.ip = DistinguishIpBlock.IpAddress2Int();
                     msg.port = localport;
                     break;
                 case USRSTRUCTS.DROP_CALL_REQ:
@@ -762,7 +763,7 @@ namespace Com.Huen.Sockets
                     msg.from_ext = CoupleModeInfo.userid;
                     msg.to_ext = toext;
                     msg.userid = CoupleModeInfo.userid;
-                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.ip = DistinguishIpBlock.IpAddress2Int();
                     msg.port = localport;
                     break;
                 case USRSTRUCTS.HOLD_CALL_REQ:
@@ -771,7 +772,7 @@ namespace Com.Huen.Sockets
                     msg.from_ext = CoupleModeInfo.userid;
                     msg.to_ext = toext;
                     msg.userid = CoupleModeInfo.userid;
-                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.ip = DistinguishIpBlock.IpAddress2Int();
                     msg.port = localport;
                     break;
                 case USRSTRUCTS.ACTIVE_CALL_REQ:
@@ -780,7 +781,7 @@ namespace Com.Huen.Sockets
                     msg.from_ext = CoupleModeInfo.userid;
                     msg.to_ext = toext;
                     msg.userid = CoupleModeInfo.userid;
-                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.ip = DistinguishIpBlock.IpAddress2Int();
                     msg.port = localport;
                     break;
                 case USRSTRUCTS.ENABLE_CALL_RECORD_REQ:
@@ -788,7 +789,7 @@ namespace Com.Huen.Sockets
                     msg.direct = USRSTRUCTS.DIRECT_OUTGOING;
                     msg.from_ext = CoupleModeInfo.userid;
                     msg.to_ext = toext;
-                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.ip = DistinguishIpBlock.IpAddress2Int();
                     msg.port = 21010;
                     break;
                 case USRSTRUCTS.ENABLE_NAT_CALL_RECORD_REQ:
@@ -796,7 +797,7 @@ namespace Com.Huen.Sockets
                     msg.direct = USRSTRUCTS.DIRECT_OUTGOING;
                     msg.from_ext = CoupleModeInfo.userid;
                     msg.to_ext = toext;
-                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.ip = DistinguishIpBlock.IpAddress2Int();
                     msg.port = 21010;
                     break;
                 case USRSTRUCTS.DISABLE_CALL_RECORD_REQ:
@@ -804,7 +805,7 @@ namespace Com.Huen.Sockets
                     msg.direct = USRSTRUCTS.DIRECT_OUTGOING;
                     msg.from_ext = CoupleModeInfo.userid;
                     msg.to_ext = toext;
-                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.ip = DistinguishIpBlock.IpAddress2Int();
                     msg.port = 21010;
                     break;
             }
@@ -855,7 +856,7 @@ namespace Com.Huen.Sockets
                     msg.from_ext = CoupleModeInfo.userid;
                     msg.to_ext = call.to_ext;
                     msg.userid = CoupleModeInfo.userid;
-                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.ip = DistinguishIpBlock.IpAddress2Int();
                     msg.port = localport;
                     break;
                 case USRSTRUCTS.HOLD_CALL_REQ:
@@ -864,7 +865,7 @@ namespace Com.Huen.Sockets
                     msg.from_ext = CoupleModeInfo.userid;
                     msg.to_ext = call.to_ext;
                     msg.userid = CoupleModeInfo.userid;
-                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.ip = DistinguishIpBlock.IpAddress2Int();
                     msg.port = localport;
                     break;
                 case USRSTRUCTS.ACTIVE_CALL_REQ:
@@ -873,7 +874,7 @@ namespace Com.Huen.Sockets
                     msg.from_ext = CoupleModeInfo.userid;
                     msg.to_ext = call.to_ext;
                     msg.userid = CoupleModeInfo.userid;
-                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.ip = DistinguishIpBlock.IpAddress2Int();
                     msg.port = localport;
                     break;
                 case USRSTRUCTS.ENABLE_CALL_RECORD_REQ:
@@ -881,7 +882,7 @@ namespace Com.Huen.Sockets
                     msg.direct = USRSTRUCTS.DIRECT_OUTGOING;
                     msg.from_ext = CoupleModeInfo.userid;
                     msg.to_ext = call.to_ext;
-                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.ip = DistinguishIpBlock.IpAddress2Int();
                     msg.port = 21010;
                     break;
                 case USRSTRUCTS.ENABLE_NAT_CALL_RECORD_REQ:
@@ -889,7 +890,7 @@ namespace Com.Huen.Sockets
                     msg.direct = USRSTRUCTS.DIRECT_OUTGOING;
                     msg.from_ext = CoupleModeInfo.userid;
                     msg.to_ext = call.to_ext;
-                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.ip = DistinguishIpBlock.IpAddress2Int();
                     msg.port = 21010;
                     break;
                 case USRSTRUCTS.DISABLE_CALL_RECORD_REQ:
@@ -897,7 +898,7 @@ namespace Com.Huen.Sockets
                     msg.direct = USRSTRUCTS.DIRECT_OUTGOING;
                     msg.from_ext = CoupleModeInfo.userid;
                     msg.to_ext = call.to_ext;
-                    msg.ip = util.IpAddress2Int(util.DoGetHostEntry());
+                    msg.ip = DistinguishIpBlock.IpAddress2Int();
                     msg.port = 21010;
                     break;
             }

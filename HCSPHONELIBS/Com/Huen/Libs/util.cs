@@ -15,6 +15,7 @@ using System.Windows.Controls;
 using Com.Huen.Sockets;
 using Com.Huen.DataModel;
 using System.Net;
+using System.Collections.Generic;
 
 namespace Com.Huen.Libs
 {
@@ -847,13 +848,14 @@ namespace Com.Huen.Libs
             return Application.Current.FindResource(str).ToString();
         }
 
+        /*
         public static String DoGetHostEntry()
         {
             IPHostEntry host;
 
             host = Dns.GetHostEntry(Dns.GetHostName());
 
-            IPAddress ip = host.AddressList.LastOrDefault(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork);
+            IPAddress ip = host.AddressList.FirstOrDefault(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork);
 
             return ip.ToString();
 
@@ -870,7 +872,7 @@ namespace Com.Huen.Libs
             //}
         }
 
-        public static int IpAddress2Int(String address)
+        public static int IpAddress2Int(string address)
         {
             int intAddress;
 
@@ -885,5 +887,6 @@ namespace Com.Huen.Libs
 
             return intAddress;
         }
+        */
     }
 }
