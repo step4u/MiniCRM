@@ -176,6 +176,8 @@
                                 <MenuItem Header="{StaticResource PB_TREEVIEW_CUST_MENU_HEADER_2}" Click="MenuItem_Click_2"/>
                                 <Separator />
                                 <MenuItem Header="{StaticResource PB_TREEVIEW_CUST_MENU_HEADER_3}" Click="MenuItem_Click_3"/>
+                                <MenuItem Header="{StaticResource PB_TREEVIEW_CUST_MENU_HEADER_4}" Click="MenuItem_Click_4_1"/>
+                                <MenuItem Header="{StaticResource PB_TREEVIEW_CUST_MENU_HEADER_5}" Click="MenuItem_Click_5_1"/>
                             </ContextMenu>
                         </usercontrol:WpfTreeViewInPlaceEditControl.ContextMenu>
                     </usercontrol:WpfTreeViewInPlaceEditControl>
@@ -202,7 +204,10 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     -->
-                    <DataGrid x:Name="dgCustList" Grid.Column="1" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowHeaderWidth="0" IsHitTestVisible="True" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False" HeadersVisibility="Column" CanUserSortColumns="False" CanUserResizeColumns="True" CanUserReorderColumns="False" AutoGenerateColumns="False" ContextMenuOpening="dgCustList_ContextMenuOpening" MouseDoubleClick="dgCustList_MouseDoubleClick">
+                    <DataGrid x:Name="dgCustList" Grid.Column="1" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowHeaderWidth="0" IsHitTestVisible="True" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False" HeadersVisibility="Column" CanUserSortColumns="False" CanUserResizeColumns="True" CanUserReorderColumns="False"
+                              AutoGenerateColumns="False"
+                              ContextMenuOpening="dgCustList_ContextMenuOpening"
+                              MouseDoubleClick="dgCustList_MouseDoubleClick">
                         <DataGrid.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="{StaticResource PB_DATAGRID_CUST_MENU_HEADER_0}" Click="MenuItem_Click_4"></MenuItem>
@@ -222,7 +227,7 @@
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Width="30">
                                 <DataGridTemplateColumn.Header>
-                                    <CheckBox Click="CheckBox_Click"/>
+                                    <CheckBox x:Name="chbHeader" Click="CheckBox_Click"/>
                                 </DataGridTemplateColumn.Header>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>

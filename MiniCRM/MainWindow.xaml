@@ -12,7 +12,8 @@
         SizeToContent="WidthAndHeight"
         Closing="Window_Closing"
         ResizeMode="CanMinimize"
-        Closed="Window_Closed" PreviewKeyDown="mainWin_PreviewKeyDown">
+        Closed="Window_Closed"
+        PreviewKeyDown="mainWin_PreviewKeyDown">
     <Window.DataContext>
         <dm:MinicrmButtonStates />
     </Window.DataContext>

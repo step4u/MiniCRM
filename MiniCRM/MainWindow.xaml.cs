@@ -739,12 +739,17 @@ namespace MiniCRM
                     break;
             }
 
-            var scope = FocusManager.GetFocusScope(btn); // elem is the UIElement to unfocus
+            this.ClearFocus(btn);
+        }
+
+        private void ClearFocus(DependencyObject obj)
+        {
+            var scope = FocusManager.GetFocusScope(obj); // elem is the UIElement to unfocus
             FocusManager.SetFocusedElement(scope, null); // remove logical focus
             Keyboard.ClearFocus(); // remove keyboard focus
         }
 
-        private void Window_KeyUp(object sender, KeyEventArgs e)
+        private void mainWin_KeyUp(object sender, KeyEventArgs e)
         {
             ModifierKeys modifierkey = e.KeyboardDevice.Modifiers;
             Key key = (Key)e.Key;
@@ -776,6 +781,120 @@ namespace MiniCRM
                 else
                 {
                     txt_message.Text = string.Empty;
+                }
+
+                if (IsTransfer)
+                    this.TransferCall(txt_number.Text.Trim());
+                else
+                    this.MakeCall(txt_number.Text.Trim());
+
+                //if (behavoir == BEHAVIOR_STATES.TRANSFER)
+                //{
+                //    this.TransferCall(txt_number.Text.Trim());
+                //}
+                //else if (behavoir == BEHAVIOR_STATES.NONE || behavoir == BEHAVIOR_STATES.NORMAL)
+                //{
+                //    this.MakeCall(txt_number.Text.Trim());
+                //}
+
+                return;
+            }
+
+            switch (key)
+            {
+                case Key.NumPad1:
+                case Key.D1:
+                    stringkey = "1";
+                    break;
+                case Key.NumPad2:
+                case Key.D2:
+                    stringkey = "2";
+                    break;
+                case Key.NumPad3:
+                case Key.D3:
+                    if (modifierkey == ModifierKeys.Shift)
+                    {
+                        stringkey = "#";
+                    }
+                    else
+                    {
+                        stringkey = "3";
+                    }
+                    break;
+                case Key.NumPad4:
+                case Key.D4:
+                    stringkey = "4";
+                    break;
+                case Key.NumPad5:
+                case Key.D5:
+                    stringkey = "5";
+                    break;
+                case Key.NumPad6:
+                case Key.D6:
+                    stringkey = "6";
+                    break;
+                case Key.NumPad7:
+                case Key.D7:
+                    stringkey = "7";
+                    break;
+                case Key.NumPad8:
+                case Key.D8:
+                    if (modifierkey == ModifierKeys.Shift)
+                    {
+                        stringkey = "*";
+                    }
+                    else
+                    {
+                        stringkey = "8";
+                    }
+                    break;
+                case Key.NumPad9:
+                case Key.D9:
+                    stringkey = "9";
+                    break;
+                case Key.NumPad0:
+                case Key.D0:
+                    stringkey = "0";
+                    break;
+                case Key.Multiply:
+                    stringkey = "*";
+                    break;
+                case Key.OemComma:
+                    stringkey = ",";
+                    break;
+            }
+
+            txt_number.Text += stringkey;
+        }
+
+        private void mainWin_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            ModifierKeys modifierkey = e.KeyboardDevice.Modifiers;
+            Key key = (Key)e.Key;
+            string stringkey = string.Empty;
+            string txtdialnum = txt_number.Text;
+
+            if (key == Key.Back)
+            {
+                if (string.IsNullOrEmpty(txt_number.Text))
+                {
+                    return;
+                }
+
+                txt_number.Text = txtdialnum.Substring(0, txtdialnum.Length - 1);
+                return;
+            }
+            else if (key == Key.Delete)
+            {
+                txt_number.Text = string.Empty;
+            }
+            else if (key == Key.Enter)
+            {
+                if (string.IsNullOrEmpty(txt_number.Text.Trim()))
+                {
+                    txt_message.Text = Application.Current.FindResource("MSG_CALL_STATES_EMPTY_NUM").ToString();
+                    e.Handled = true;
+                    return;
                 }
 
                 if (IsTransfer)
@@ -902,7 +1021,9 @@ namespace MiniCRM
             ProcessStartInfo psi = new ProcessStartInfo("explorer.exe");
             psi.WindowStyle = ProcessWindowStyle.Normal;
             psi.Arguments = util.GetRecordFolder();
-            Process.Start(psi); 
+            Process.Start(psi);
+
+            this.ClearFocus((Button)sender);
         }
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)
@@ -910,6 +1031,8 @@ namespace MiniCRM
             MainSettings settings = new MainSettings();
             settings.Owner = this;
             settings.Show();
+
+            this.ClearFocus((Button)sender);
         }
 
         public PhoneBook pb = null;
@@ -926,6 +1049,8 @@ namespace MiniCRM
                 pb.Show();
             }
             pb.tabs.SelectedIndex = 0;
+
+            this.ClearFocus((Button)sender);
         }
 
         private void btnSms_Click(object sender, RoutedEventArgs e)
@@ -933,12 +1058,16 @@ namespace MiniCRM
             pb.Show();
             pb.tabs.SelectedIndex = 2;
             pb.flySms.IsOpen = true;
+
+            this.ClearFocus((Button)sender);
         }
 
         private void btn_callpull_Copy_Click(object sender, RoutedEventArgs e)
         {
             pb.Show();
             pb.tabs.SelectedIndex = 1;
+
+            // this.ClearFocus((Button)sender);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -975,10 +1104,13 @@ namespace MiniCRM
             if (string.IsNullOrEmpty(lastcallnumber))
             {
                 e.Handled = true;
+                this.ClearFocus((Button)sender);
                 return;
             }
             SetNumber(lastcallnumber);
             this.MakeCall(lastcallnumber);
+
+            // this.ClearFocus((Button)sender);
         }
 
         private bool IsTransfer = false;
@@ -1003,26 +1135,15 @@ namespace MiniCRM
                 IsTransfer = true;
             }
 
-            btnCall.Focus();
-
-            //if (behavoir == BEHAVIOR_STATES.TRANSFER)
-            //{
-            //    txt_number.Text = prevstr;
-            //    behavoir = BEHAVIOR_STATES.NONE;
-
-            //    SetMessage(Application.Current.FindResource("MSG_CALL_STATES_READY_TRANSFER").ToString());
-            //}
-            //else if (behavoir == BEHAVIOR_STATES.NORMAL || behavoir == BEHAVIOR_STATES.NONE)
-            //{
-            //    txt_number.Text = string.Empty;
-            //    behavoir = BEHAVIOR_STATES.TRANSFER;
-            //    SetMessage(string.Empty);
-            //}
+            // btnCall.Focus();
+            // this.ClearFocus((Button)sender);
         }
 
         private void btn_callpull_Click(object sender, RoutedEventArgs e)
         {
             this.PickupCall("*98");
+
+            // this.ClearFocus((Button)sender);
         }
 
         private bool IsHold = false;
@@ -1038,6 +1159,8 @@ namespace MiniCRM
                 this.HoldCall(curCall.Cust_Tel);
                 IsHold = true;
             }
+
+            this.ClearFocus((Button)sender);
         }
 
         private void btnRecord_Click(object sender, RoutedEventArgs e)
@@ -1047,7 +1170,9 @@ namespace MiniCRM
             else
                 client.RecordStartRequest(curCall.Cust_Tel);
 
-            // IsRecording = !IsRecording;
+            IsRecording = !IsRecording;
+
+            this.ClearFocus((Button)sender);
         }
 
         private void UIChanging(byte status)
@@ -1104,120 +1229,6 @@ namespace MiniCRM
                         break;
                 }
             }));
-        }
-
-        private void mainWin_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            ModifierKeys modifierkey = e.KeyboardDevice.Modifiers;
-            Key key = (Key)e.Key;
-            string stringkey = string.Empty;
-            string txtdialnum = txt_number.Text;
-
-            if (key == Key.Back)
-            {
-                if (string.IsNullOrEmpty(txt_number.Text))
-                {
-                    return;
-                }
-
-                txt_number.Text = txtdialnum.Substring(0, txtdialnum.Length - 1);
-                return;
-            }
-            else if (key == Key.Delete)
-            {
-                txt_number.Text = string.Empty;
-            }
-            else if (key == Key.Enter)
-            {
-                if (string.IsNullOrEmpty(txt_number.Text.Trim()))
-                {
-                    txt_message.Text = Application.Current.FindResource("MSG_CALL_STATES_EMPTY_NUM").ToString();
-                    e.Handled = true;
-                    return;
-                }
-
-                if (IsTransfer)
-                    this.TransferCall(txt_number.Text.Trim());
-                else
-                    this.MakeCall(txt_number.Text.Trim());
-
-                //if (behavoir == BEHAVIOR_STATES.TRANSFER)
-                //{
-                //    this.TransferCall(txt_number.Text.Trim());
-                //}
-                //else if (behavoir == BEHAVIOR_STATES.NONE || behavoir == BEHAVIOR_STATES.NORMAL)
-                //{
-                //    this.MakeCall(txt_number.Text.Trim());
-                //}
-
-                return;
-            }
-
-            switch (key)
-            {
-                case Key.NumPad1:
-                case Key.D1:
-                    stringkey = "1";
-                    break;
-                case Key.NumPad2:
-                case Key.D2:
-                    stringkey = "2";
-                    break;
-                case Key.NumPad3:
-                case Key.D3:
-                    if (modifierkey == ModifierKeys.Shift)
-                    {
-                        stringkey = "#";
-                    }
-                    else
-                    {
-                        stringkey = "3";
-                    }
-                    break;
-                case Key.NumPad4:
-                case Key.D4:
-                    stringkey = "4";
-                    break;
-                case Key.NumPad5:
-                case Key.D5:
-                    stringkey = "5";
-                    break;
-                case Key.NumPad6:
-                case Key.D6:
-                    stringkey = "6";
-                    break;
-                case Key.NumPad7:
-                case Key.D7:
-                    stringkey = "7";
-                    break;
-                case Key.NumPad8:
-                case Key.D8:
-                    if (modifierkey == ModifierKeys.Shift)
-                    {
-                        stringkey = "*";
-                    }
-                    else
-                    {
-                        stringkey = "8";
-                    }
-                    break;
-                case Key.NumPad9:
-                case Key.D9:
-                    stringkey = "9";
-                    break;
-                case Key.NumPad0:
-                case Key.D0:
-                    stringkey = "0";
-                    break;
-                case Key.Multiply:
-                    stringkey = "*";
-                    break;
-                case Key.OemComma:
-                    stringkey = ",";
-                    break;
-            }
-
-            txt_number.Text += stringkey;
         }
     }
 

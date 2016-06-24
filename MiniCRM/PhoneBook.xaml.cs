@@ -343,6 +343,76 @@ namespace MiniCRM
             CustState = CUSTOMER_STATE.ADD;
         }
 
+        private void MenuItem_Click_4_1(object sender, RoutedEventArgs e)
+        {
+            // 고객 excel로 추가
+            System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            openFileDialog.Multiselect = false;
+            openFileDialog.Filter = "Excel 97-2013|*.xls";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.ShowDialog();
+
+            string xlsfilename = openFileDialog.FileName;
+            openFileDialog.Dispose();
+
+            DataSet ds = ExcelHelper.OpenExcelDB(xlsfilename);
+
+            if (ds != null)
+            {
+                if (ds.Tables.Count == 1)
+                {
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        Customer _customer = new Customer() {
+                            Group_Name = row[0].ToString().Trim(),
+                            Name = row[1].ToString().Trim(),
+                            Company = row[2].ToString().Trim(),
+                            Title = row[3].ToString().Trim(),
+                            Tel = row[4].ToString().Trim(),
+                            Cellular = row[5].ToString().Trim(),
+                            Extension = row[6].ToString().Trim(),
+                            Email = row[7].ToString().Trim(),
+                            Addr = row[8].ToString().Trim()
+                        };
+                        customers.importExcel(_customer);
+                    }
+                }
+            }
+        }
+
+        private void MenuItem_Click_5_1(object sender, RoutedEventArgs e)
+        {
+            // 고객 excel로 저장
+            System.Windows.Forms.SaveFileDialog saveDialog = new System.Windows.Forms.SaveFileDialog();
+            saveDialog.Filter = "Excel 97-2013 (*.xls)|*.xls";
+
+            if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                DataSet _ds = new DataSet();
+                DataTable _dt = new DataTable();
+                _dt.Columns.Add("그룹명", typeof(string));
+                _dt.Columns.Add("고객명", typeof(string));
+                _dt.Columns.Add("회사명", typeof(string));
+                _dt.Columns.Add("직급", typeof(string));
+                _dt.Columns.Add("회사전화", typeof(string));
+                _dt.Columns.Add("휴대전화", typeof(string));
+                _dt.Columns.Add("회사내선", typeof(string));
+                _dt.Columns.Add("이메일", typeof(string));
+                _dt.Columns.Add("주소", typeof(string));
+
+                foreach (Customer item in dgCustList.Items)
+                {
+                    _dt.Rows.Add(item.Group_Name, item.Name, item.Company, item.Title, item.Tel, item.Cellular, item.Extension, item.Email, item.Addr);
+                }
+
+                _ds.Tables.Add(_dt);
+
+                ExcelHelper.SaveExcelDB(saveDialog.FileName, _ds, true);
+
+                MessageBox.Show("주소록 저장이 완료되었습니다.", "알림!!");
+            }
+        }
+
         private void dgCustList_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             GroupList gselitem = tvGroup.SelectedItem as GroupList;
@@ -476,23 +546,61 @@ namespace MiniCRM
             MenuItem menuitem = (MenuItem)e.Source;
             ContextMenu cm = (ContextMenu)menuitem.Parent;
             DataGrid view = (DataGrid)cm.PlacementTarget;
-            Customer item = (Customer)view.SelectedItem;
 
-            try
+            int checkedcount = 0;
+
+            foreach (Customer itm in view.Items)
             {
-                customers.remove(item);
+                if (itm.IsChecked)
+                    checkedcount++;
             }
-            catch (FbException ex)
+
+            if (checkedcount > 0)
             {
-                if (ex.ErrorCode == 335544466
-                    && ex.Message.Contains("CALL_LISTS")
-                    && ex.Message.Contains("FK_CALL_LISTS_1"))
+                List<Customer> viewlist = new List<Customer>(view.Items.Cast<Customer>().ToList().Where(x => x.IsChecked == true));
+
+                foreach (Customer itm in viewlist)
                 {
-                    e.Handled = true;
-                    MessageBox.Show(Application.Current.FindResource("MSG_ERR_CUSTOMER_REMOVE_EXIST_CALLLIST").ToString(), Application.Current.FindResource("MSGBOX_TXT_TITLE").ToString());
+                    if (itm.IsChecked)
+                    {
+                        try
+                        {
+                            customers.remove(itm);
+                        }
+                        catch (FbException ex)
+                        {
+                            if (ex.ErrorCode == 335544466
+                                && ex.Message.Contains("CALL_LISTS")
+                                && ex.Message.Contains("FK_CALL_LISTS_1"))
+                            {
+                                e.Handled = true;
+                                MessageBox.Show(Application.Current.FindResource("MSG_ERR_CUSTOMER_REMOVE_EXIST_CALLLIST").ToString(), Application.Current.FindResource("MSGBOX_TXT_TITLE").ToString());
+                            }
+                        }
+                    }
                 }
             }
-            
+            else
+            {
+                Customer item = (Customer)view.SelectedItem;
+
+                try
+                {
+                    customers.remove(item);
+                }
+                catch (FbException ex)
+                {
+                    if (ex.ErrorCode == 335544466
+                        && ex.Message.Contains("CALL_LISTS")
+                        && ex.Message.Contains("FK_CALL_LISTS_1"))
+                    {
+                        e.Handled = true;
+                        MessageBox.Show(Application.Current.FindResource("MSG_ERR_CUSTOMER_REMOVE_EXIST_CALLLIST").ToString(), Application.Current.FindResource("MSGBOX_TXT_TITLE").ToString());
+                    }
+                }
+            }
+
+            if (chbHeader.IsChecked == true ? true : false) chbHeader.IsChecked = false;
         }
 
         private void MenuItem_Click_7(object sender, RoutedEventArgs e)

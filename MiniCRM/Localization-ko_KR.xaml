@@ -90,6 +90,8 @@
     <sys:String x:Key="PB_TREEVIEW_CUST_MENU_HEADER_1">그룹수정</sys:String>
     <sys:String x:Key="PB_TREEVIEW_CUST_MENU_HEADER_2">그룹삭제</sys:String>
     <sys:String x:Key="PB_TREEVIEW_CUST_MENU_HEADER_3">고객추가</sys:String>
+    <sys:String x:Key="PB_TREEVIEW_CUST_MENU_HEADER_4">고객 엑셀 가져오기</sys:String>
+    <sys:String x:Key="PB_TREEVIEW_CUST_MENU_HEADER_5">고객 엑셀 내보내기</sys:String>
 
     <!-- CUSTOMER Insert / Modify / Remove -->
     <sys:String x:Key="PB_DATAGRID_CUST_TOP_LABEL_0">고객추가</sys:String>

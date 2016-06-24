@@ -85,6 +85,9 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="WinSound">
+      <HintPath>..\..\..\libraries\새 폴더\Source_4\WinSound\WinSound\bin\Debug\WinSound.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Com\Huen\Commands\CommandBase.cs" />
@@ -148,6 +151,7 @@
     <Compile Include="Com\Huen\DataModel\InnerTel.cs" />
     <Compile Include="Com\Huen\DataModel\MinicrmButtonStates.cs" />
     <Compile Include="Com\Huen\DataModel\MonthFee.cs" />
+    <Compile Include="Com\Huen\DataModel\Options.cs" />
     <Compile Include="Com\Huen\DataModel\Parent.cs" />
     <Compile Include="Com\Huen\DataModel\ProductRegisterInfo.cs" />
     <Compile Include="Com\Huen\DataModel\RcvData.cs" />
@@ -198,8 +202,8 @@
     <Compile Include="Com\Huen\Sockets\FileTransferServer.cs" />
     <Compile Include="Com\Huen\Sockets\Header.cs" />
     <Compile Include="Com\Huen\Sockets\HUDPClient.cs" />
-    <Compile Include="Com\Huen\Sockets\RTPRecorderCouple.cs" />
     <Compile Include="Com\Huen\Sockets\RTPRecorder2.cs" />
+    <Compile Include="Com\Huen\Sockets\RTPRecorderCouple.cs" />
     <Compile Include="Com\Huen\Sockets\UdpCoupleMode.cs" />
     <Compile Include="Com\Huen\Sql\ExcelHelper.cs" />
     <Compile Include="Com\Huen\Sql\FirebirdDBHelper.cs" />

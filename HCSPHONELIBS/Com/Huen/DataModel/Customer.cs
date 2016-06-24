@@ -17,6 +17,7 @@ namespace Com.Huen.DataModel
         private bool _IsSelected = false;
         public int Idx { get; set; }
         public int Group_Idx { get; set; }
+        public string Group_Name { get; set; }
         public string Name { get; set; }
         public string Company { get; set; }
         public string Title { get; set; }
@@ -85,15 +86,16 @@ namespace Com.Huen.DataModel
                                 IsSelected = false,
                                 Idx = string.IsNullOrEmpty(row[0].ToString()) == false ? int.Parse(row[0].ToString()) : -1,
                                 Group_Idx = string.IsNullOrEmpty(row[1].ToString()) == false ? int.Parse(row[1].ToString()) : -1,
-                                Name = row[2].ToString(),
-                                Company = row[3].ToString(),
-                                Title = row[4].ToString(),
-                                Tel = row[5].ToString(),
-                                Cellular = row[6].ToString(),
-                                Extension = row[7].ToString(),
-                                Email = row[8].ToString(),
-                                Addr = row[9].ToString(),
-                                Etc = row[10].ToString()
+                                Group_Name = row[2].ToString(),
+                                Name = row[3].ToString(),
+                                Company = row[4].ToString(),
+                                Title = row[5].ToString(),
+                                Tel = row[6].ToString(),
+                                Cellular = row[7].ToString(),
+                                Extension = row[8].ToString(),
+                                Email = row[9].ToString(),
+                                Addr = row[10].ToString(),
+                                Etc = row[11].ToString()
                             });
                     }
                 }
@@ -125,7 +127,7 @@ namespace Com.Huen.DataModel
                     db.Commit();
 
                     item.Idx = string.IsNullOrEmpty(idx) == false ? int.Parse(idx) : -1;
-                    var itm = this.Items.FirstOrDefault(x => x.Group_Idx == item.Group_Idx);
+                    // var itm = this.Items.FirstOrDefault(x => x.Group_Idx == item.Group_Idx);
 
                     // if (itm != null)
                         this.Add(item);
@@ -135,6 +137,39 @@ namespace Com.Huen.DataModel
                     //    if (this.Items[0].Group_Idx == item.Group_Idx)
                     //        this.Add(item);
                     //}
+                }
+                catch (FbException e)
+                {
+                    util.WriteLog(e.ErrorCode, e.Message);
+                    db.Rollback();
+                }
+            }
+        }
+
+        public void importExcel(Customer item)
+        {
+            if (string.IsNullOrEmpty(item.Group_Name.Trim())) return;
+
+            using (FirebirdDBHelper db = new FirebirdDBHelper(util.GetFbDbStrConn()))
+            {
+                try
+                {
+                    db.SetParameters("@I_GROUP_NAME", FbDbType.VarChar, item.Group_Name);
+                    db.SetParameters("@I_NAME", FbDbType.VarChar, item.Name);
+                    db.SetParameters("@I_COMPANY", FbDbType.VarChar, item.Company);
+                    db.SetParameters("@I_TITLE", FbDbType.VarChar, item.Title);
+                    db.SetParameters("@I_TEL", FbDbType.VarChar, item.Tel);
+                    db.SetParameters("@I_CELLULAR", FbDbType.VarChar, item.Cellular);
+                    db.SetParameters("@I_EXTENSION", FbDbType.VarChar, item.Extension);
+                    db.SetParameters("@I_EMAIL", FbDbType.VarChar, item.Email);
+                    db.SetParameters("@I_ADDR", FbDbType.VarChar, item.Addr);
+
+                    db.BeginTran();
+                    string idx = db.GetDataSP("INS_CUSTOMERS").ToString();
+                    db.Commit();
+
+                    item.Idx = string.IsNullOrEmpty(idx) == false ? int.Parse(idx) : -1;
+                    this.Add(item);
                 }
                 catch (FbException e)
                 {

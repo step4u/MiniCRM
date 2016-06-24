@@ -282,6 +282,7 @@ namespace Com.Huen.Sockets
         // 1 각 응답 결과 Success
         // 0 각 응답 결과 Fail
         public Int32 result;
+        public ObservableCollection<InnerTel> innertels;
     }
     #endregion RTP Record Intercept Response 구조체 e
 
@@ -302,9 +303,9 @@ namespace Com.Huen.Sockets
     [Serializable()]
     public class InterceptResponse
     {
-        public int cmd = 0;
-        public int status = 0;
-        public int length = 0;
+        public Int32 cmd;
+        public Int32 result;
+        public ObservableCollection<InnerTel> innertels;
     }
 
     [Serializable()]

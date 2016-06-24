@@ -530,6 +530,41 @@ namespace Com.Huen.Libs
             }
         }
 
+        public static void WriteLogTest2(string msg)
+        {
+            string logpath = @"D:\logtest";
+
+            if (!Directory.Exists(logpath))
+                Directory.CreateDirectory(logpath);
+
+            string logfilepath = string.Format(@"{0}\{1}{2:00}{3:00}.log", logpath, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            StreamWriter w = File.AppendText(logfilepath);
+            w.WriteLine("{0} {1}", DateTime.Now.ToLongDateString(), DateTime.Now.ToLongTimeString());
+            w.WriteLine("  :{0}", msg);
+            w.WriteLine("---------------------------------------------------");
+            w.Flush();
+            w.Close();
+        }
+
+        public static void WriteLogTest3(string msg, string fn)
+        {
+            DateTime now = DateTime.Now;
+            string logpath = string.Format(@"{0}\{1}\{2}-{3:00}-{4:00}", Options.usersdefaultpath, "log", now.Year, now.Month, now.Day);
+
+            if (!Directory.Exists(logpath))
+                Directory.CreateDirectory(logpath);
+
+            string logfilepath = string.Format(@"{0}\{1}.log", logpath, fn);
+
+            using (StreamWriter w = File.AppendText(logfilepath))
+            {
+                w.WriteLine("{0} {1}", now.ToLongDateString(), now.ToLongTimeString());
+                w.WriteLine("  :{0}", msg);
+                w.WriteLine("---------------------------------------------------");
+                w.Flush();
+            }
+        }
+
         public static void WriteStructVal(CommandMsg msg)
         {
             string userdatapath = string.Format(@"{0}\{1}", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MiniCRM");
