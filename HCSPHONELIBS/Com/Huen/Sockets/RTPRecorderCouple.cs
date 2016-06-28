@@ -115,6 +115,7 @@ namespace Com.Huen.Sockets
             CommandMsg msg = new CommandMsg()
             {
                 cmd = USRSTRUCTS.SEND_RECORD_DUMMY_DATA,
+                from_ext = CoupleModeInfo.userid
             };
 
             byte[] bytes = util.GetBytes(msg);

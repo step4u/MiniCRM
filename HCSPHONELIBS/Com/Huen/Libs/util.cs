@@ -27,6 +27,7 @@ namespace Com.Huen.Libs
         public static DateTime i_date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, i_day);
         public static int WordLength = 40;
         public static string _dbserverip = "58.141.60.250";
+        public static bool IsRemoteLittleEndian = true;
 
         public static String GetFbDbStrConn()
         {
@@ -923,5 +924,16 @@ namespace Com.Huen.Libs
             return intAddress;
         }
         */
+
+        public static int ReverseInt(int value)
+        {
+            int returnValue = 0;
+            if (util.IsRemoteLittleEndian)
+                returnValue = BitConverter.ToInt32(BitConverter.GetBytes(value).Reverse().ToArray(), 0);
+            else
+                returnValue = value;
+
+            return returnValue;
+        }
     }
 }

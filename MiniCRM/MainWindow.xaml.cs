@@ -1023,7 +1023,7 @@ namespace MiniCRM
             psi.Arguments = util.GetRecordFolder();
             Process.Start(psi);
 
-            this.ClearFocus((Button)sender);
+            // this.ClearFocus((Button)sender);
         }
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)
@@ -1101,12 +1101,12 @@ namespace MiniCRM
 
         private void btn_redial_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(lastcallnumber))
-            {
-                e.Handled = true;
-                this.ClearFocus((Button)sender);
-                return;
-            }
+            //if (string.IsNullOrEmpty(lastcallnumber))
+            //{
+            //    e.Handled = true;
+            //    this.ClearFocus((Button)sender);
+            //    return;
+            //}
             SetNumber(lastcallnumber);
             this.MakeCall(lastcallnumber);
 

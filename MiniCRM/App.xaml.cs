@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Com.Huen.Libs;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -15,6 +16,7 @@ namespace MiniCRM
         void App_Startup(object sender, StartupEventArgs e)
         {
             string ui = string.Empty;
+            string endian = string.Empty;
 
             try
             {
@@ -34,6 +36,20 @@ namespace MiniCRM
                                     default:
                                         // MessageBox.Show(string.Format("{0} is not a compatible UI. Will work in KCT.", ui));
                                         ui = "KCT";
+                                        break;
+                                }
+                                break;
+                            case "-rendian":
+                                endian = e.Args[i + 1];
+                                switch (endian)
+                                {
+                                    case "true":
+                                    case "t":
+                                    case "T":
+                                        util.IsRemoteLittleEndian = true;
+                                        break;
+                                    default:
+                                        util.IsRemoteLittleEndian = false;
                                         break;
                                 }
                                 break;

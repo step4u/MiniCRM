@@ -36,11 +36,11 @@ namespace Com.Huen.Libs
 
             if (count > 0)
             {
-                ip = host.AddressList.FirstOrDefault(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && IsIpNat(x.ToString()) == false);
+                ip = host.AddressList.LastOrDefault(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && IsIpNat(x.ToString()) == false);
             }
             else
             {
-                ip = host.AddressList.FirstOrDefault(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && IsIpNat(x.ToString()) == true);
+                ip = host.AddressList.LastOrDefault(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && IsIpNat(x.ToString()) == true);
             }
 
             return ip;
@@ -50,13 +50,13 @@ namespace Com.Huen.Libs
         {
             int intAddress;
 
-            if (BitConverter.IsLittleEndian)
+            if (util.IsRemoteLittleEndian)
             {
-                intAddress = BitConverter.ToInt32(IPAddress.Parse(GetIPAddress().ToString()).GetAddressBytes(), 0);
+                intAddress = BitConverter.ToInt32(IPAddress.Parse(GetIPAddress().ToString()).GetAddressBytes().Reverse().ToArray(), 0);
             }
             else
             {
-                intAddress = BitConverter.ToInt32(IPAddress.Parse(GetIPAddress().ToString()).GetAddressBytes().Reverse().ToArray(), 0);
+                intAddress = BitConverter.ToInt32(IPAddress.Parse(GetIPAddress().ToString()).GetAddressBytes(), 0);
             }
 
             return intAddress;

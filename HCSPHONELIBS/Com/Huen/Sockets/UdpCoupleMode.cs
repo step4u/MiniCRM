@@ -790,7 +790,7 @@ namespace Com.Huen.Sockets
                     msg.from_ext = CoupleModeInfo.userid;
                     msg.to_ext = toext;
                     msg.ip = DistinguishIpBlock.IpAddress2Int();
-                    msg.port = 21010;
+                    msg.port = util.ReverseInt(21010);
                     break;
                 case USRSTRUCTS.ENABLE_NAT_CALL_RECORD_REQ:
                     msg.type = USRSTRUCTS.TYPE_COUPLEPHONE;
@@ -798,7 +798,7 @@ namespace Com.Huen.Sockets
                     msg.from_ext = CoupleModeInfo.userid;
                     msg.to_ext = toext;
                     msg.ip = DistinguishIpBlock.IpAddress2Int();
-                    msg.port = 21010;
+                    msg.port = util.ReverseInt(21010);
                     break;
                 case USRSTRUCTS.DISABLE_CALL_RECORD_REQ:
                     msg.type = USRSTRUCTS.TYPE_COUPLEPHONE;
@@ -806,7 +806,7 @@ namespace Com.Huen.Sockets
                     msg.from_ext = CoupleModeInfo.userid;
                     msg.to_ext = toext;
                     msg.ip = DistinguishIpBlock.IpAddress2Int();
-                    msg.port = 21010;
+                    msg.port = util.ReverseInt(21010);
                     break;
             }
 
