@@ -52,11 +52,11 @@ namespace Com.Huen.Libs
 
             if (util.IsRemoteLittleEndian)
             {
-                intAddress = BitConverter.ToInt32(IPAddress.Parse(GetIPAddress().ToString()).GetAddressBytes().Reverse().ToArray(), 0);
+                intAddress = BitConverter.ToInt32(IPAddress.Parse(GetIPAddress().ToString()).GetAddressBytes(), 0);
             }
             else
             {
-                intAddress = BitConverter.ToInt32(IPAddress.Parse(GetIPAddress().ToString()).GetAddressBytes(), 0);
+                intAddress = BitConverter.ToInt32(IPAddress.Parse(GetIPAddress().ToString()).GetAddressBytes().Reverse().ToArray(), 0);
             }
 
             return intAddress;

@@ -663,7 +663,7 @@ namespace Com.Huen.Sockets
             // util.WriteLog(string.Format("cmd : {0}, status : {1}, receiverphones : {2}, toext : {3}, fromext : {4}", msg.cmd, msg.status, msg.receiverphones, msg.to_ext, msg.from_ext));
         }
 
-        #region 메시지 생성 메소드
+        #region 메시지 생성 메서드
         public CommandMsg GetCommandMsg(byte st)
         {
             CommandMsg msg = new CommandMsg();
@@ -945,7 +945,7 @@ namespace Com.Huen.Sockets
 
             return msg;
         }
-        #endregion 메시지 생성 메소드
+        #endregion 메시지 생성 메서드
 
     }
 }

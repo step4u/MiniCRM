@@ -86,7 +86,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsFormsIntegration" />
     <Reference Include="WinSound">
-      <HintPath>..\..\..\libraries\새 폴더\Source_4\WinSound\WinSound\bin\Debug\WinSound.dll</HintPath>
+      <HintPath>..\..\..\Libraries\C#\dll\WinSound.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

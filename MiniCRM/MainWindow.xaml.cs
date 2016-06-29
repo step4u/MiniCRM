@@ -213,7 +213,6 @@ namespace MiniCRM
 
         private void Client_TransferCallSuccessEvent(object obj, CommandMsg msg)
         {
-
             behavoir = BEHAVIOR_STATES.NONE;
         }
 
@@ -694,6 +693,8 @@ namespace MiniCRM
                     {
                         txt_message.Text = Application.Current.FindResource("MSG_CALL_STATES_EMPTY_NUM").ToString();
                         e.Handled = true;
+
+                        this.ClearFocus(btn);
                         return;
                     }
                     else
@@ -716,8 +717,11 @@ namespace MiniCRM
                     //}
                     break;
                 case "CLR":
-                    SetNumber(string.Empty);
-                    SetMessage(string.Empty);
+                    // SetNumber(string.Empty);
+                    // SetMessage(string.Empty);
+                    txt_number.Text = string.Empty;
+                    txt_message.Text = string.Empty;
+                    //System.Threading.Thread.Sleep(300);
                     break;
                 case "☏":
                     if (curCall != null)

@@ -929,9 +929,9 @@ namespace Com.Huen.Libs
         {
             int returnValue = 0;
             if (util.IsRemoteLittleEndian)
-                returnValue = BitConverter.ToInt32(BitConverter.GetBytes(value).Reverse().ToArray(), 0);
-            else
                 returnValue = value;
+            else
+                returnValue = BitConverter.ToInt32(BitConverter.GetBytes(value).Reverse().ToArray(), 0);
 
             return returnValue;
         }
