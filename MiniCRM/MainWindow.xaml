@@ -198,7 +198,7 @@
             <Rectangle Fill="#000" Stroke="Black" RadiusY="5" RadiusX="5"/>
             <Button x:Name="btnCall" Content="☎" ToolTip="Call" HorizontalAlignment="Left" Height="32" Margin="4,4,0,0" Style="{DynamicResource DialButtonStyle1}" VerticalAlignment="Top" Width="40" Click="DialPad_Click" />
             <Button x:Name="btnClear" Content="CLR" ToolTip="Clear" Height="32" Margin="49,4,0,0" Style="{DynamicResource DialButtonStyle1}" VerticalAlignment="Top" Width="40" HorizontalAlignment="Left" d:LayoutOverrides="Width" Click="DialPad_Click"/>
-            <Button x:Name="btnHangup" Content="☏" ToolTip="Hang up" HorizontalAlignment="Left" Height="32" Margin="94,4,0,0" Style="{DynamicResource DialButtonStyle1}" VerticalAlignment="Top" Width="40" Click="DialPad_Click"/>
+            <Button x:Name="btnHangup" Content="" HorizontalAlignment="Left" Height="32" Margin="94,4,0,0" Style="{DynamicResource DialButtonStyle1}" VerticalAlignment="Top" Width="40" Click="DialPad_Click"/>
             <Button x:Name="btnOne" Content="1" HorizontalAlignment="Left" Height="32" Margin="4,40,0,0" Style="{DynamicResource DialButtonStyle1}" VerticalAlignment="Top" Width="40" Click="DialPad_Click"/>
             <Button x:Name="btnTwo" Content="2" Height="32" Margin="49,40,0,0" Style="{DynamicResource DialButtonStyle1}" VerticalAlignment="Top" Width="40" HorizontalAlignment="Left" d:LayoutOverrides="Width" Click="DialPad_Click"/>
             <Button x:Name="btnThree" Content="3" Height="32" Margin="94,40,0,0" Style="{DynamicResource DialButtonStyle1}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="40" Click="DialPad_Click"/>

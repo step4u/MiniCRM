@@ -68,13 +68,20 @@ namespace Com.Huen.Sql
 
         public FirebirdDBHelper(string strconn)
         {
-            this.strConn = strconn;
+            try
+            {
+                this.strConn = strconn;
 
-            conn = new FbConnection(strConn);
-            conn.Open();
+                conn = new FbConnection(strConn);
+                conn.Open();
 
-            cmd = new FbCommand();
-            cmd.Connection = conn;
+                cmd = new FbCommand();
+                cmd.Connection = conn;
+            }
+            catch (FbException ex)
+            {
+                util.WriteLog("FBHelper connection error");
+            }
         }
 
         public FirebirdDBHelper(string str, string strconn)
@@ -100,17 +107,24 @@ namespace Com.Huen.Sql
 
         public FirebirdDBHelper(string str, string strconn, CommandType cmdtype)
         {
-            strSql = str;
-            strConn = strconn;
-            CmdType = cmdtype;
+            try
+            {
+                strSql = str;
+                strConn = strconn;
+                CmdType = cmdtype;
 
-            conn = new FbConnection(strConn);
-            conn.Open();
+                conn = new FbConnection(strConn);
+                conn.Open();
 
-            cmd = new FbCommand();
-            cmd.CommandType = CmdType;
-            cmd.CommandText = strSql;
-            cmd.Connection = conn;
+                cmd = new FbCommand();
+                cmd.CommandType = CmdType;
+                cmd.CommandText = strSql;
+                cmd.Connection = conn;
+            }
+            catch (FbException ex)
+            {
+                util.WriteLog("FBHelper connection error");
+            }
         }
 
         public void ClearParameters()

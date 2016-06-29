@@ -38,7 +38,7 @@ namespace Com.Huen.Sockets
         private int remoteport = 21011;
         private IPEndPoint ipep;
 
-        private WaveFormat pcmFormat = new WaveFormat(8000, 16, 1);
+        // private WaveFormat pcmFormat = new WaveFormat(8000, 16, 1);
         private string seqnum = string.Empty;
         private List<RtpRecordInfo> RecordIngList;
 

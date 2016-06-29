@@ -131,7 +131,11 @@ namespace MiniCRM
 
         private void Client_MakeCallSuccessEvent(object obj, CommandMsg msg)
         {
-            
+            Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                btnCall.Content = "C";
+                btnCall.ToolTip = "Cancel";
+            }));
         }
 
         private void Client_MakeCallFailEvent(object obj, CommandMsg msg)
@@ -141,7 +145,11 @@ namespace MiniCRM
 
         private void Client_DropCallSuccessEvent(object obj, CommandMsg msg)
         {
-
+            Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                btnCall.Content = "☎";
+                btnCall.ToolTip = "Call";
+            }));
         }
 
         private void Client_DropCallFailEvent(object obj, CommandMsg msg)
@@ -692,9 +700,8 @@ namespace MiniCRM
                     if (string.IsNullOrEmpty(txt_number.Text.Trim()))
                     {
                         txt_message.Text = Application.Current.FindResource("MSG_CALL_STATES_EMPTY_NUM").ToString();
-                        e.Handled = true;
-
                         this.ClearFocus(btn);
+                        e.Handled = true;
                         return;
                     }
                     else
@@ -716,12 +723,18 @@ namespace MiniCRM
                     //    this.MakeCall(txt_number.Text.Trim());
                     //}
                     break;
+                case "C":
+                    if (curCall != null)
+                        this.DropCall(curCall);
+                    break;
                 case "CLR":
-                    // SetNumber(string.Empty);
-                    // SetMessage(string.Empty);
-                    txt_number.Text = string.Empty;
-                    txt_message.Text = string.Empty;
-                    //System.Threading.Thread.Sleep(300);
+                    if (callstate != CALL_STATES.CONNECTED && callstate != CALL_STATES.RING)
+                    {
+                        // SetNumber(string.Empty);
+                        // SetMessage(string.Empty);
+                        txt_number.Text = string.Empty;
+                        txt_message.Text = string.Empty;
+                    }
                     break;
                 case "☏":
                     if (curCall != null)
@@ -741,6 +754,8 @@ namespace MiniCRM
                 case "#":
                     txt_number.Text += whatis;
                     break;
+                case "":
+                    break;
             }
 
             this.ClearFocus(btn);
@@ -750,7 +765,7 @@ namespace MiniCRM
         {
             var scope = FocusManager.GetFocusScope(obj); // elem is the UIElement to unfocus
             FocusManager.SetFocusedElement(scope, null); // remove logical focus
-            Keyboard.ClearFocus(); // remove keyboard focus
+            // Keyboard.ClearFocus(); // remove keyboard focus
         }
 
         private void mainWin_KeyUp(object sender, KeyEventArgs e)
@@ -882,10 +897,12 @@ namespace MiniCRM
             {
                 if (string.IsNullOrEmpty(txt_number.Text))
                 {
+                    e.Handled = true;
                     return;
                 }
 
                 txt_number.Text = txtdialnum.Substring(0, txtdialnum.Length - 1);
+                e.Handled = true;
                 return;
             }
             else if (key == Key.Delete)
@@ -915,6 +932,7 @@ namespace MiniCRM
                 //    this.MakeCall(txt_number.Text.Trim());
                 //}
 
+                e.Handled = true;
                 return;
             }
 
@@ -1027,7 +1045,7 @@ namespace MiniCRM
             psi.Arguments = util.GetRecordFolder();
             Process.Start(psi);
 
-            // this.ClearFocus((Button)sender);
+            this.ClearFocus((Button)sender);
         }
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)
@@ -1206,6 +1224,8 @@ namespace MiniCRM
                         btnsatate.RecordBtn = (Style)Application.Current.FindResource("btnREC_down");
                         btnRecord.IsEnabled = true;
 
+                        btnCall.IsEnabled = false;
+
                         callstate = CALL_STATES.CONNECTED;
 
                         break;
@@ -1224,6 +1244,10 @@ namespace MiniCRM
 
                         btnsatate.RecordBtn = (Style)Application.Current.FindResource("btnREC_off");
                         btnRecord.IsEnabled = false;
+
+                        btnCall.IsEnabled = true;
+                        btnCall.Content = "☎";
+                        btnCall.ToolTip = "Call";
 
                         curCall = null;
                         callstate = CALL_STATES.NONE;
