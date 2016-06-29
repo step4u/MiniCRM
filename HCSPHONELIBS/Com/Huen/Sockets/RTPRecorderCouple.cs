@@ -216,7 +216,7 @@ namespace Com.Huen.Sockets
 
             int nDataSize = recInfo.size - 12;
 
-            if (nDataSize != 80 && nDataSize != 160 && nDataSize != 240 && nDataSize != -12) return;
+            if (nDataSize != 80 && nDataSize != 160 && nDataSize != 240 && nDataSize != 10 && nDataSize != -12) return;
 
             // util.WriteLog(string.Format("seq:{0}, ext:{1}, peer:{2}, isExtension:{3}, size:{4}, bytesLength:{5}", recInfo.seq, recInfo.extension, recInfo.peer_number, recInfo.isExtension, recInfo.size - 12, recInfo.voice.Length));
 
@@ -228,9 +228,13 @@ namespace Com.Huen.Sockets
             var _ingInstance = RecordIngList.FirstOrDefault(x => x.ext == _recInfo.extension && x.peer == _recInfo.peer_number);
             if (_ingInstance == null)
             {
+                byte[] rtpbuff = new byte[_recInfo.size];
+                Array.Copy(_recInfo.voice, 0, rtpbuff, 0, _recInfo.size);
+                WinSound.RTPPacket rtp = new WinSound.RTPPacket(rtpbuff);
+
                 WaveFormat _wavformat;
 
-                switch (_recInfo.codec)
+                switch (rtp.PayloadType)
                 {
                     case 0:
                         _wavformat = WaveFormat.CreateMuLawFormat(8000, 1);
@@ -239,10 +243,10 @@ namespace Com.Huen.Sockets
                         _wavformat = WaveFormat.CreateALawFormat(8000, 1);
                         break;
                     case 4:
-                        _wavformat = WaveFormat.CreateCustomFormat(WaveFormatEncoding.G723, 8000, 1, 8000, 1, 8);
+                        _wavformat = WaveFormat.CreateCustomFormat(WaveFormatEncoding.G723, 8000, 1, 8000 * 1, 1, 8);
                         break;
                     case 18:
-                        _wavformat = WaveFormat.CreateCustomFormat(WaveFormatEncoding.G729, 8000, 1, 8000, 1, 8);
+                        _wavformat = WaveFormat.CreateCustomFormat(WaveFormatEncoding.G729, 8000, 1, 8000 * 1, 1, 8);
                         break;
                     default:
                         _wavformat = WaveFormat.CreateALawFormat(8000, 1);
