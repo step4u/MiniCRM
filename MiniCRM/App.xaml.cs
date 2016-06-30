@@ -40,12 +40,11 @@ namespace MiniCRM
                                 }
                                 break;
                             case "-rendian":
+                            case "-remoteendian":
                                 endian = e.Args[i + 1];
-                                switch (endian)
+                                switch (endian.ToLower())
                                 {
-                                    case "true":
-                                    case "t":
-                                    case "T":
+                                    case "little":
                                         util.IsRemoteLittleEndian = true;
                                         break;
                                     default:

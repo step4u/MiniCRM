@@ -269,20 +269,24 @@ namespace MiniCRM
 
                 Customer itm = smscustomers.FirstOrDefault(x => x.Cellular.Equals(msg.receiverphones));
 
-                Sms item = new Sms()
+                if (itm != null)
                 {
-                    Cust_Name = itm.Name,
-                    Cust_Tel = msg.receiverphones,
-                    Memo = msg.message,
-                    Regdate = DateTime.Now,
-                    Result = msg.status
-                };
+                    Sms item = new Sms()
+                    {
+                        Cust_Name = itm.Name,
+                        Cust_Tel = msg.receiverphones,
+                        Memo = msg.message,
+                        Regdate = DateTime.Now,
+                        Result = msg.status
+                    };
 
-                pb.smslist.add(item);
-                pb.dgSmsList.ItemsSource = pb.smslist;
+                    pb.smslist.add(item);
+                    pb.dgSmsList.ItemsSource = pb.smslist;
 
-                smscustomers.Remove(itm);
-                this.SendSms(null, smsmsg, smssender);
+                    smscustomers.Remove(itm);
+                    this.SendSms(null, smsmsg, smssender);
+                }
+                
             }));
         }
 
@@ -469,10 +473,17 @@ namespace MiniCRM
             string strmsg = string.Empty;
             if (cust.Group_Idx < 1)
             {
+                pb.CUSTOMERSTATE = CUSTOMER_STATE.ADD;
+
                 strmsg = Application.Current.FindResource("MSG_CALL_OUT").ToString();
+                cust.Group_Idx = 0;
+                cust.Group_Name = string.Empty;
+                cust.Cellular = msg.to_ext;
             }
             else
             {
+                pb.CUSTOMERSTATE = CUSTOMER_STATE.MODIFY;
+
                 curCall.Cust_Idx = cust.Idx;
                 curCall.Name = cust.Name;
                 strmsg = string.Format(Application.Current.FindResource("MSG_CALL_OUT2").ToString(), cust.Name);
@@ -519,7 +530,8 @@ namespace MiniCRM
                 {
                     pb.tabs.SelectedIndex = 1;
                     pb.dgridCustCallList.ItemsSource = pb.GetCallListByCustIdx(cust.Idx, curCall.Cust_Tel);
-                    pb.flyCustomer.DataContext = cust;
+                    pb.FlyCustomer = cust;
+                    //pb.flyCustomer.DataContext = cust;
                     pb.flyCustomer.Header = Application.Current.FindResource("PB_FLYOUT_TITLE_CUST_INFO").ToString();
                     pb.flyCustomer.IsOpen = true;
                 }
@@ -548,6 +560,7 @@ namespace MiniCRM
             if (cust.Idx < 1)
             {
                 pb.CUSTOMERSTATE = CUSTOMER_STATE.ADD;
+                cust.Group_Idx = 0;
                 cust.Cellular = msg.from_ext;
                 strmsg = Application.Current.FindResource("MSG_CALL_IN").ToString();
             }
@@ -676,17 +689,25 @@ namespace MiniCRM
                 smssender = sender;
             }
 
-            var item = smscustomers.FirstOrDefault<Customer>();
-            if (item == null)
+            foreach (Customer customer in smscustomers)
             {
-                smscustomers = null;
-                smsmsg = string.Empty;
-                smssender = string.Empty;
+                client.SendSms(customer, strmsg, sender);
             }
-            else
-            {
-                client.SendSms(item, strmsg, sender);
-            }
+
+
+
+
+            //var item = smscustomers.FirstOrDefault<Customer>();
+            //if (item == null)
+            //{
+            //    smscustomers = null;
+            //    smsmsg = string.Empty;
+            //    smssender = string.Empty;
+            //}
+            //else
+            //{
+            //    client.SendSms(item, strmsg, sender);
+            //}
         }
 
         private void DialPad_Click(object sender, RoutedEventArgs e)

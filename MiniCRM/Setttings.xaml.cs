@@ -33,10 +33,10 @@ namespace MiniCRM
             Ini ini = new Ini(string.Format(@"{0}\{1}", path, "env.ini"));
 
             pbxip = ini.IniReadValue("PBX", "IP");
-            pbxport = ini.IniReadValue("PBX", "PORT");
+            //pbxport = ini.IniReadValue("PBX", "PORT");
 
             txtIPAddress.Text = pbxip;
-            txtPort.Text = pbxport;
+            //txtPort.Text = pbxport;
             txtIPAddress.Focus();
         }
 

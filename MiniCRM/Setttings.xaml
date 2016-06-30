@@ -13,7 +13,7 @@
                 <TextBlock x:Name="tbIP" Text="{DynamicResource WIN_SETTINGS_PBX_LABEL_IPADDRESS}" HorizontalAlignment="Left" Margin="26,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
                 <TextBox x:Name="txtIPAddress" HorizontalAlignment="Left" Height="23" Margin="99,15,0,0" VerticalAlignment="Top" Width="120" TextAlignment="Center" TabIndex="1" MaxLength="15"/>
                 <TextBlock x:Name="tbPORT" Text="{DynamicResource WIN_SETTINGS_PBX_LABEL_PORT}" HorizontalAlignment="Left" Margin="26,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                <TextBox x:Name="txtPort" HorizontalAlignment="Left" Height="23" Margin="99,54,0,0" VerticalAlignment="Top" Width="120" TextAlignment="Center" TabIndex="2" MaxLength="5"/>
+                <TextBox x:Name="txtPort" Text="31001" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="99,54,0,0" VerticalAlignment="Top" Width="120" TextAlignment="Center" TabIndex="2" MaxLength="5"/>
                 <StackPanel Orientation="Horizontal" Margin="0,82,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Button x:Name="btnOk" Content="{DynamicResource BTN_TXT_OK}" Height="26.333" Style="{DynamicResource btnGlassStyle}" Width="53.417" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,40,0" Click="btnOk_Click"/>
                     <Button x:Name="btnCancel" Content="{DynamicResource BTN_TXT_CANCEL}" Height="26.333" Style="{DynamicResource btnGlassStyle}" Width="53.417" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" Click="btnCancel_Click"/>

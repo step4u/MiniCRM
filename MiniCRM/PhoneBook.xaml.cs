@@ -339,6 +339,7 @@ namespace MiniCRM
             flyCustomer.DataContext = flycustomer;
             flyCustomer.Header = Application.Current.FindResource("PB_FLYOUT_TITLE_CUST_ADD").ToString();
             flyCustomer.IsOpen = true;
+            dgridCustCallList.ItemsSource = null;
 
             CustState = CUSTOMER_STATE.ADD;
         }
@@ -353,6 +354,10 @@ namespace MiniCRM
             openFileDialog.ShowDialog();
 
             string xlsfilename = openFileDialog.FileName;
+
+            if (string.IsNullOrEmpty(xlsfilename))
+                return;
+
             openFileDialog.Dispose();
 
             DataSet ds = ExcelHelper.OpenExcelDB(xlsfilename);
@@ -388,6 +393,9 @@ namespace MiniCRM
 
             if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                //if (string.IsNullOrEmpty(saveDialog.FileName))
+                //    return;
+
                 DataSet _ds = new DataSet();
                 DataTable _dt = new DataTable();
                 _dt.Columns.Add("그룹명", typeof(string));
@@ -643,7 +651,7 @@ namespace MiniCRM
             ContextMenu cm = (ContextMenu)menuitem.Parent;
             DataGrid view = (DataGrid)cm.PlacementTarget;
 
-            Customers smscustlist = new Customers(); ;
+            Customers smscustlist = new Customers();
             foreach (Customer item in view.ItemsSource)
             {
                 if (item.IsChecked)
@@ -682,6 +690,7 @@ namespace MiniCRM
                 cmbGroup.Focus();
                 return;
             }
+
             if (string.IsNullOrEmpty(flycustomer.Name))
             {
                 MessageBox.Show(Application.Current.FindResource("MSG_ERR_CUSTOMER_EMPTY_NAME").ToString(), Application.Current.FindResource("MSGBOX_TXT_TITLE").ToString());
@@ -1529,7 +1538,10 @@ namespace MiniCRM
             // CALL LIST
             // 메모
             DataGrid view = (DataGrid)e.Source;
+            if (view.Items.Count < 1) return;
+
             CallList item = (CallList)view.SelectedItem;
+            if (item == null) return;
 
             CallList tmp = new CallList() { IsSelected = item.IsSelected, IsChecked = item.IsChecked, Idx = item.Idx, Cust_Idx = item.Cust_Idx, Name = item.Name, Direction = item.Direction, Cust_Tel = item.Cust_Tel, Startdate = item.Startdate, Enddate = item.Enddate, Memo = item.Memo };
 
