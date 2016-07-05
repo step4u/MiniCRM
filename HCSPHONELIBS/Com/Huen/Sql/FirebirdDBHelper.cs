@@ -84,11 +84,11 @@ namespace Com.Huen.Sql
             }
         }
 
-        public FirebirdDBHelper(string str, string strconn)
+        public FirebirdDBHelper(string sql, string strconn)
         {
             try
             {
-                strSql = str;
+                strSql = sql;
                 strConn = strconn;
 
                 conn = new FbConnection(strConn);
@@ -105,11 +105,11 @@ namespace Com.Huen.Sql
             }
         }
 
-        public FirebirdDBHelper(string str, string strconn, CommandType cmdtype)
+        public FirebirdDBHelper(string sql, string strconn, CommandType cmdtype)
         {
             try
             {
-                strSql = str;
+                strSql = sql;
                 strConn = strconn;
                 CmdType = cmdtype;
 
