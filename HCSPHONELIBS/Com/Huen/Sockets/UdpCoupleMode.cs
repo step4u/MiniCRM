@@ -190,7 +190,7 @@ namespace Com.Huen.Sockets
                 if (client != null)
                 {
                     client.Close();
-                    client.Dispose();
+                    //client.Dispose();
                 }
             }
             catch (SocketException e)

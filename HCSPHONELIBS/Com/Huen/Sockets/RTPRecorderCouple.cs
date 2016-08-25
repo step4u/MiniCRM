@@ -387,7 +387,7 @@ namespace Com.Huen.Sockets
             if (client != null)
             {
                 client.Close();
-                client.Dispose();
+                //client.Dispose();
             }
 
             if (timer != null)
@@ -402,7 +402,7 @@ namespace Com.Huen.Sockets
             if (client != null)
             {
                 client.Close();
-                client.Dispose();
+                //client.Dispose();
             }
 
             if (timer != null)
